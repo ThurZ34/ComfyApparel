@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdukController;
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('produk', App\Http\Controllers\ProdukController::class);
-});
+Route::resource('produk', ProdukController::class);
 
 Route::get('/', function () {
     return view('landing.home');

@@ -84,123 +84,101 @@
                 </div>
             </div>
 
-            <!-- Content -->
-            <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+            <!-- Content (Grid Layout) -->
+            <div>
                 @if ($produk->count() > 0)
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-zinc-200">
-                            <thead class="bg-zinc-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                        Produk
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                        Harga
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                        Stok
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only text-zinc-500 font-medium">Aksi</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-zinc-200">
-                                @foreach ($produk as $item)
-                                    <tr class="hover:bg-zinc-50 transition-colors duration-150">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div
-                                                    class="flex-shrink-0 h-12 w-12 bg-zinc-100 rounded-lg border border-zinc-200 overflow-hidden flex items-center justify-center">
-                                                    @if ($item->gambar)
-                                                        <img class="h-full w-full object-cover"
-                                                            src="{{ Storage::url($item->gambar) }}"
-                                                            alt="{{ $item->nama }}">
-                                                    @else
-                                                        <svg class="h-6 w-6 text-zinc-300"
-                                                            xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                    @endif
-                                                </div>
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-zinc-900">{{ $item->nama }}
-                                                    </div>
-                                                    <div class="text-xs text-zinc-500 truncate max-w-[200px]">
-                                                        {{ $item->deskripsi ?? 'Tidak ada deskripsi' }}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-zinc-900">Rp
-                                                {{ number_format($item->harga, 0, ',', '.') }}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-zinc-700">{{ $item->stok }} <span
-                                                    class="text-zinc-400 text-xs text-normal">Unit</span></div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->stok > 10 ? 'bg-emerald-100 text-emerald-800' : ($item->stok > 0 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800') }}">
-                                                @if ($item->stok > 10)
-                                                    Tersedia
-                                                @elseif($item->stok > 0)
-                                                    Hampir Habis
-                                                @else
-                                                    Habis
-                                                @endif
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        @foreach ($produk as $item)
+                            <div
+                                class="bg-white rounded-2xl shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col group">
+                                <!-- Image Section -->
+                                <div class="relative aspect-[4/3] bg-zinc-100 overflow-hidden">
+                                    @if ($item->gambar)
+                                        <img class="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500 will-change-transform"
+                                            src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama }}">
+                                    @else
+                                        <div class="flex items-center justify-center h-full">
+                                            <svg class="h-12 w-12 text-zinc-300" xmlns="http://www.w3.org/2000/svg"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                    @endif
+
+                                    <!-- Status Badge -->
+                                    <div class="absolute top-3 right-3">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold shadow-sm {{ $item->stok > 10 ? 'bg-emerald-100 text-emerald-800' : ($item->stok > 0 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800') }}">
+                                            @if ($item->stok > 10)
+                                                Tersedia
+                                            @elseif($item->stok > 0)
+                                                Hampir Habis
+                                            @else
+                                                Habis
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Content Section -->
+                                <div class="p-5 flex-1 flex flex-col">
+                                    <h3 class="text-lg font-bold text-zinc-900 line-clamp-1 mb-1"
+                                        title="{{ $item->nama }}">
+                                        {{ $item->nama }}
+                                    </h3>
+                                    <p class="text-sm text-zinc-500 line-clamp-2 min-h-[40px] mb-4">
+                                        {{ $item->deskripsi ?? 'Tidak ada deskripsi' }}
+                                    </p>
+
+                                    <div class="mt-auto space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-lg font-bold text-comfy-800">
+                                                Rp {{ number_format($item->harga, 0, ',', '.') }}
                                             </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <div class="flex items-center justify-end gap-2">
-                                                <!-- Trigger Edit Modal -->
-                                                <button
-                                                    @click="editProduct({
-                                                        id: '{{ $item->id }}',
-                                                        nama: '{{ addslashes($item->nama) }}',
-                                                        harga: '{{ $item->harga }}',
-                                                        stok: '{{ $item->stok }}',
-                                                        deskripsi: '{{ addslashes($item->deskripsi) }}',
-                                                        gambar_url: '{{ $item->gambar ? Storage::url($item->gambar) : '' }}'
-                                                    })"
-                                                    class="text-zinc-400 hover:text-indigo-600 transition-colors p-1 rounded-md hover:bg-indigo-50">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                    </svg>
-                                                </button>
-                                                <!-- Trigger Delete Modal -->
-                                                <button
-                                                    @click="confirmDelete('{{ route('admin.produk.destroy', $item->id) }}')"
-                                                    class="text-zinc-400 hover:text-red-600 transition-colors p-1 rounded-md hover:bg-red-50">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            <span
+                                                class="text-xs font-medium text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md">
+                                                Stok: {{ $item->stok }}
+                                            </span>
+                                        </div>
+
+                                        <!-- Actions -->
+                                        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-zinc-100">
+                                            <button
+                                                @click="editProduct({
+                                                    id: '{{ $item->id }}',
+                                                    nama: '{{ addslashes($item->nama) }}',
+                                                    harga: '{{ $item->harga }}',
+                                                    stok: '{{ $item->stok }}',
+                                                    deskripsi: '{{ addslashes($item->deskripsi) }}',
+                                                    gambar_url: '{{ $item->gambar ? Storage::url($item->gambar) : '' }}'
+                                                })"
+                                                class="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-indigo-600 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                                Edit
+                                            </button>
+                                            <button
+                                                @click="confirmDelete('{{ route('produk.destroy', $item->id) }}')"
+                                                class="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-red-600 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 @else
-                    <div class="text-center py-16">
+                    <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden text-center py-16">
                         <svg class="mx-auto h-12 w-12 text-zinc-300" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
                             <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
@@ -256,7 +234,7 @@
                             </button>
                         </div>
 
-                        <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="px-4 py-5 sm:p-6 space-y-4">
                                 <!-- Nama Produk -->
