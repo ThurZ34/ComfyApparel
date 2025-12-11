@@ -31,8 +31,8 @@
         @include('layouts.partials.sidebar')
 
         <!-- Main Content Wrapper -->
-        <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out"
-            :class="sidebarOpen ? 'lg:pl-72' : 'lg:pl-20'">
+        <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out lg:pl-72"
+            :class="!sidebarOpen ? '!lg:pl-20' : ''">
 
             <!-- Header -->
             @include('layouts.partials.header')
