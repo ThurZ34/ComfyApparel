@@ -56,14 +56,20 @@
             <div class="pt-4 border-t border-zinc-800 mb-2" x-show="!sidebarOpen"></div>
 
             <!-- Users Link -->
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group text-zinc-500 hover:bg-comfy-50 hover:text-comfy-800">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6 shrink-0">
+            <a href="{{ route('admin.produk.index') }}"
+                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group
+           {{ request()->routeIs('admin.produk.index') ? 'bg-comfy-800 text-white font-semibold shadow-md shadow-comfy-800/20' : 'text-zinc-500 hover:bg-comfy-50 hover:text-comfy-800' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                </svg>
-                <span class="whitespace-nowrap" x-show="sidebarOpen">Users</span>
+                        d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                </svg> <span class="whitespace-nowrap transition-all duration-300" x-show="sidebarOpen">Produk</span>
+
+                <!-- Tooltip for collapsed state -->
+                <div class="absolute left-full rounded-md px-2 py-1 ml-6 bg-zinc-900 text-white text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 lg:hidden"
+                    :class="!sidebarOpen ? 'lg:block' : ''">
+                    Produk
+                </div>
             </a>
 
             <!-- Settings Link -->
