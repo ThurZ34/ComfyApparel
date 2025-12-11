@@ -243,7 +243,7 @@
                                         Produk</label>
                                     <div class="mt-2">
                                         <input type="text" name="nama" id="nama" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -251,23 +251,23 @@
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="harga"
-                                            class="block text-sm font-medium leading-6 text-zinc-900">Harga (Rp)</label>
+                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Harga (Rp)</label>
                                         <div class="mt-2 relative rounded-md shadow-sm">
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                 <span class="text-zinc-500 sm:text-sm">Rp</span>
                                             </div>
                                             <input type="number" name="harga" id="harga" required
-                                                class="block w-full rounded-md border-0 py-1.5 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                                class="p-4 block w-full rounded-md border-0 py-1.5 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
                                                 placeholder="0">
                                         </div>
                                     </div>
                                     <div>
                                         <label for="stok"
-                                            class="block text-sm font-medium leading-6 text-zinc-900">Stok</label>
+                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Stok</label>
                                         <div class="mt-2">
                                             <input type="number" name="stok" id="stok" required
-                                                class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                                class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
                                 </div>
@@ -275,16 +275,16 @@
                                 <!-- Deskripsi -->
                                 <div>
                                     <label for="deskripsi"
-                                        class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
+                                        class="p-4 block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
                                         <textarea id="deskripsi" name="deskripsi" rows="3"
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                            class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
 
                                 <!-- Gambar -->
                                 <div>
-                                    <label for="gambar" class="block text-sm font-medium leading-6 text-zinc-900">Gambar
+                                    <label for="gambar" class="p-4 block text-sm font-medium leading-6 text-zinc-900">Gambar
                                         Produk</label>
                                     <div class="mt-2">
                                         <input type="file" name="gambar" id="gambar" accept="image/*" required
