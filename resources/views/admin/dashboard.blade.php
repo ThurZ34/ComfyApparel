@@ -8,16 +8,16 @@
     <div class="space-y-6">
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1: Black Theme (Primary) -->
+            <!-- Card 1: Comfy Theme (Primary) -->
             <div
-                class="relative overflow-hidden bg-black text-white p-6 rounded-2xl shadow-xl transform transition duration-300 hover:-translate-y-1 hover:shadow-2xl group">
+                class="relative overflow-hidden bg-comfy-800 text-white p-6 rounded-2xl shadow-xl transform transition duration-300 hover:-translate-y-1 hover:shadow-2xl group">
                 <div
-                    class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-zinc-800 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500">
+                    class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-white/10 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500">
                 </div>
 
                 <div class="flex items-center justify-between mb-4 relative z-10">
-                    <h3 class="text-zinc-400 text-xs font-semibold uppercase tracking-wider">Total Revenue</h3>
-                    <span class="p-2 bg-zinc-900 border border-zinc-800 rounded-lg">
+                    <h3 class="text-comfy-200 text-xs font-semibold uppercase tracking-wider">Total Revenue</h3>
+                    <span class="p-2 bg-white/10 border border-white/10 rounded-lg text-comfy-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -27,7 +27,7 @@
                 </div>
                 <p class="text-4xl font-bold tracking-tight mb-1 relative z-10">$45,231.89</p>
                 <div class="mt-4 flex items-center text-sm relative z-10">
-                    <span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
+                    <span class="text-comfy-200 bg-white/10 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="size-3">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -35,16 +35,16 @@
                         </svg>
                         20.1%
                     </span>
-                    <span class="text-zinc-500 ml-2">from last month</span>
+                    <span class="text-comfy-200/70 ml-2">from last month</span>
                 </div>
             </div>
 
             <!-- Card 2: White Theme -->
             <div
-                class="bg-white border border-zinc-200 p-6 rounded-2xl shadow-sm hover:border-black/20 hover:shadow-md transition-all duration-300">
+                class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm hover:border-comfy-500/30 hover:shadow-md transition-all duration-300">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Active Users</h3>
-                    <span class="p-2 bg-zinc-50 rounded-lg text-black">
+                    <span class="p-2 bg-comfy-50 rounded-lg text-comfy-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -54,7 +54,7 @@
                 </div>
                 <p class="text-4xl font-bold text-zinc-900 tracking-tight">2,350</p>
                 <div class="mt-4 flex items-center text-sm">
-                    <span class="text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
+                    <span class="text-comfy-800 bg-comfy-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="size-3">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -68,10 +68,10 @@
 
             <!-- Card 3: White Theme -->
             <div
-                class="bg-white border border-zinc-200 p-6 rounded-2xl shadow-sm hover:border-black/20 hover:shadow-md transition-all duration-300">
+                class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm hover:border-comfy-500/30 hover:shadow-md transition-all duration-300">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Total Orders</h3>
-                    <span class="p-2 bg-zinc-50 rounded-lg text-black">
+                    <span class="p-2 bg-comfy-50 rounded-lg text-comfy-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -81,7 +81,7 @@
                 </div>
                 <p class="text-4xl font-bold text-zinc-900 tracking-tight">12,234</p>
                 <div class="mt-4 flex items-center text-sm">
-                    <span class="text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
+                    <span class="text-comfy-800 bg-comfy-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="size-3">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -104,7 +104,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-zinc-50/50 text-zinc-500 text-xs uppercase tracking-wider">
+                        <tr class="bg-comfy-50/50 text-zinc-500 text-xs uppercase tracking-wider">
                             <th class="px-6 py-3 font-semibold">Transaction ID</th>
                             <th class="px-6 py-3 font-semibold">Customer</th>
                             <th class="px-6 py-3 font-semibold">Date</th>
@@ -121,7 +121,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="w-8 h-8 rounded-full bg-linear-to-br from-zinc-100 to-zinc-200 border border-zinc-300 flex items-center justify-center text-xs font-bold text-zinc-600">
+                                            class="w-8 h-8 rounded-full bg-linear-to-br from-comfy-50 to-comfy-200 border border-comfy-200 flex items-center justify-center text-xs font-bold text-comfy-800">
                                             {{ substr('Customer Two Three', $i, 1) }}
                                         </div>
                                         <div class="text-sm font-medium text-zinc-700">Customer {{ $i }}</div>
@@ -135,7 +135,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-right whitespace-nowrap">
                                     <span
-                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $i % 2 == 0 ? 'bg-black text-white' : 'bg-zinc-100 text-zinc-600 border border-zinc-200' }}">
+                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $i % 2 == 0 ? 'bg-comfy-800 text-white' : 'bg-zinc-100 text-zinc-600 border border-zinc-200' }}">
                                         {{ $i % 2 == 0 ? 'Completed' : 'Pending' }}
                                     </span>
                                 </td>

@@ -18,7 +18,7 @@
                 stroke="currentColor" class="size-3 mx-2 text-zinc-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
-            <span class="text-black bg-zinc-100 px-2 py-0.5 rounded-md">Dashboard</span>
+            <span class="text-comfy-800 bg-comfy-50 px-2 py-0.5 rounded-md">Dashboard</span>
         </nav>
     </div>
 
@@ -45,7 +45,7 @@
                 <img src="https://ui-avatars.com/api/?name=Admin+User&background=000&color=fff" alt="Avatar"
                     class="h-9 w-9 rounded-full ring-2 ring-transparent group-hover:ring-zinc-200 transition-all">
                 <div class="hidden md:block text-left">
-                    <p class="text-sm font-semibold text-zinc-900 group-hover:text-black">Fathur Rahman</p>
+                    <p class="text-sm font-semibold text-zinc-900 group-hover:text-comfy-800">Fathur Rahman</p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4 text-zinc-500 transition-transform duration-200"

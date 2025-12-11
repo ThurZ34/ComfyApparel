@@ -13,14 +13,15 @@
         <div class="h-20 flex items-center justify-center border-b border-zinc-200 transition-all duration-300"
             :class="sidebarOpen ? 'px-6' : 'px-0'">
             <a href="/" class="flex items-center gap-3 group">
-                {{-- <div class="bg-white text-black p-2 rounded-lg group-hover:scale-105 transition-transform">
+                <div
+                    class="bg-comfy-800 text-white p-2 rounded-lg group-hover:scale-105 transition-transform shadow-md shadow-comfy-800/20">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                     </svg>
-                </div> --}}
-                <span class="font-bold text-xl transition-opacity duration-300" x-show="sidebarOpen"
+                </div>
+                <span class="font-bold text-xl transition-opacity duration-300 text-comfy-800" x-show="sidebarOpen"
                     x-transition>
                     ComfyAdmin
                 </span>
@@ -33,7 +34,7 @@
             <!-- Dashboard Link -->
             <a href="{{ route('dashboard') }}"
                 class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group
-           {{ request()->routeIs('dashboard') ? 'bg-white text-black font-semibold' : 'text-zinc-400 hover:bg-zinc-900 hover:text-white' }}">
+           {{ request()->routeIs('dashboard') ? 'bg-comfy-800 text-white font-semibold shadow-md shadow-comfy-800/20' : 'text-zinc-500 hover:bg-comfy-50 hover:text-comfy-800' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6 shrink-0">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -56,7 +57,7 @@
 
             <!-- Users Link -->
             <a href="#"
-                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group text-zinc-400 hover:bg-zinc-900 hover:text-white">
+                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group text-zinc-500 hover:bg-comfy-50 hover:text-comfy-800">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6 shrink-0">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -67,7 +68,7 @@
 
             <!-- Settings Link -->
             <a href="#"
-                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group text-zinc-400 hover:bg-zinc-900 hover:text-white">
+                class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group text-zinc-500 hover:bg-comfy-50 hover:text-comfy-800">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6 shrink-0">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -81,13 +82,13 @@
 
         <!-- User Section -->
         <div class="p-4 border-t border-zinc-200">
-            <button class="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-zinc-800 transition-colors">
+            <button class="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-comfy-50 transition-colors group">
                 <div
-                    class="h-8 w-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-sm shrink-0">
+                    class="h-8 w-8 rounded-full bg-comfy-200 text-comfy-800 border border-comfy-500 flex items-center justify-center font-bold text-sm shrink-0">
                     A
                 </div>
                 <div class="flex-1 text-left overflow-hidden" x-show="sidebarOpen">
-                    <p class="text-sm font-semibold text-white truncate">Admin User</p>
+                    <p class="text-sm font-semibold text-zinc-900 group-hover:text-comfy-800 truncate">Admin User</p>
                     <p class="text-xs text-zinc-500 truncate">admin@example.com</p>
                 </div>
                 <svg x-show="sidebarOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
