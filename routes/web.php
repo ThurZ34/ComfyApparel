@@ -10,7 +10,11 @@ use App\Http\Middleware\IsAdmin;
 
 Route::get('/', function () {
     $produks = Produk::with('kategori')->latest()->take(8)->get();
-    $kategoris = Kategori::all();
+    $kategoris = Kategori::addSelect(['gambar_terbaru' => Produk::select('gambar')
+        ->whereColumn('kategori_id', 'kategoris.id')
+        ->latest()
+        ->limit(1)
+    ])->get();
     return view('landing.home', compact('produks', 'kategoris'));
 });
 

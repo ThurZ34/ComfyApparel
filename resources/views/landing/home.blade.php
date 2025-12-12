@@ -180,28 +180,46 @@
 
             <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 @foreach ($kategoris as $kategori)
-                    <div class="group relative">
-                        <div
-                            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl bg-zinc-100 lg:aspect-none group-hover:opacity-75 lg:h-80 relative transition-all duration-300">
-                            <!-- Placeholder Pattern since no image in DB -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-comfy-50 to-zinc-200 flex items-center justify-center">
-                                <span class="text-9xl text-comfy-800/10 font-serif font-bold select-none">
-                                    {{ substr($kategori->kategori, 0, 1) }}
-                                </span>
-                            </div>
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm border border-zinc-100 hover:shadow-md transition-all duration-300">
+                        <div class="aspect-[4/3] bg-zinc-200 sm:aspect-[3/2] lg:aspect-[4/3] relative overflow-hidden">
+                            @if ($kategori->gambar_terbaru)
+                                <img src="{{ asset('storage/' . $kategori->gambar_terbaru) }}"
+                                    alt="{{ $kategori->kategori }}"
+                                    class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
+                            @else
+                                <div
+                                    class="absolute inset-0 bg-linear-to-br from-comfy-50 to-zinc-200 flex items-center justify-center">
+                                    <span class="text-8xl text-comfy-800/10 font-serif font-bold select-none">
+                                        {{ substr($kategori->kategori, 0, 1) }}
+                                    </span>
+                                </div>
+                            @endif
                         </div>
-                        <div class="mt-4 flex justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-zinc-900">
+                        <div class="flex flex-1 flex-col justify-between p-6">
+                            <div class="flex-1">
+                                <h3
+                                    class="text-xl font-bold text-zinc-900 group-hover:text-comfy-800 transition-colors">
                                     <a href="#">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
                                         {{ $kategori->kategori }}
                                     </a>
                                 </h3>
-                                <p class="mt-1 text-sm text-zinc-500 line-clamp-2">
+                                <p class="mt-3 text-base text-zinc-500 line-clamp-2 leading-relaxed">
                                     {{ $kategori->deskripsi }}
                                 </p>
+                            </div>
+                            <div class="mt-6 flex items-center gap-2 text-sm font-medium text-comfy-800">
+                                <span>Explore Collection</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="size-4 transform transition-transform group-hover:translate-x-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
                             </div>
                         </div>
                     </div>
