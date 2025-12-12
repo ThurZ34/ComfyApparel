@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('landing.home');
@@ -15,4 +16,5 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('produk', ProdukController::class);
     Route::resource('kategori', KategoriController::class);
+    Route::resource('pengguna', UserController::class);
 });
