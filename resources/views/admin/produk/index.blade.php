@@ -15,6 +15,7 @@
             harga: '',
             stok: '',
             deskripsi: '',
+            kategori_id: null,
             gambar_url: ''
         },
         deleteUrl: '',
@@ -25,6 +26,7 @@
                 harga: '',
                 stok: '',
                 deskripsi: '',
+                kategori_id: null,
                 gambar_url: ''
             };
         },
@@ -35,6 +37,7 @@
                 harga: product.harga,
                 stok: product.stok,
                 deskripsi: product.deskripsi || '',
+                kategori_id: product.kategori_id,
                 gambar_url: product.gambar_url
             };
             this.editModalOpen = true;
@@ -143,6 +146,7 @@
                                                     harga: '{{ $item->harga }}',
                                                     stok: '{{ $item->stok }}',
                                                     deskripsi: '{{ addslashes($item->deskripsi) }}',
+                                                    kategori_id: '{{ $item->kategori_id }}',
                                                     gambar_url: '{{ $item->gambar ? Storage::url($item->gambar) : '' }}'
                                                 })"
                                                 class="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-indigo-600 transition-colors">
@@ -153,8 +157,7 @@
                                                 </svg>
                                                 Edit
                                             </button>
-                                            <button
-                                                @click="confirmDelete('{{ route('produk.destroy', $item->id) }}')"
+                                            <button @click="confirmDelete('{{ route('produk.destroy', $item->id) }}')"
                                                 class="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-red-600 transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -239,11 +242,27 @@
                                     </div>
                                 </div>
 
+                                <!-- Kategori -->
+                                <div>
+                                    <label for="kategori_id"
+                                        class="block text-sm font-medium leading-6 text-zinc-900">Kategori</label>
+                                    <div class="mt-2">
+                                        <select id="kategori_id" name="kategori_id" required
+                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            <option value="" disabled selected>Pilih Kategori</option>
+                                            @foreach ($kategori as $item)
+                                                <option value="{{ $item->id }}">{{ $item->kategori }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <!-- Harga & Stok -->
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="harga"
-                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Harga (Rp)</label>
+                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Harga
+                                            (Rp)</label>
                                         <div class="mt-2 relative rounded-md shadow-sm">
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -276,7 +295,8 @@
 
                                 <!-- Gambar -->
                                 <div>
-                                    <label for="gambar" class="p-4 block text-sm font-medium leading-6 text-zinc-900">Gambar
+                                    <label for="gambar"
+                                        class="p-4 block text-sm font-medium leading-6 text-zinc-900">Gambar
                                         Produk</label>
                                     <div class="mt-2">
                                         <input type="file" name="gambar" id="gambar" accept="image/*" required
@@ -339,6 +359,24 @@
                                         <input type="text" name="nama" id="edit_nama"
                                             x-model="currentProduct.nama" required
                                             class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <!-- Kategori -->
+                                <div>
+                                    <label for="edit_kategori_id"
+                                        class="block text-sm font-medium leading-6 text-zinc-900">Kategori</label>
+                                    <div class="mt-2">
+                                        <select id="edit_kategori_id" name="kategori_id"
+                                            x-model="currentProduct.kategori_id" required
+                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            <option value="" disabled>Pilih Kategori</option>
+                                            @foreach ($kategori as $item)
+                                                <option :value="{{ $item->id }}"
+                                                    :selected="currentProduct.kategori_id == {{ $item->id }}">
+                                                    {{ $item->kategori }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
