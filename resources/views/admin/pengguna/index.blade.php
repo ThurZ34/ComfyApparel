@@ -179,7 +179,7 @@
             <div x-show="createModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -213,7 +213,7 @@
                                         Lengkap</label>
                                     <div class="mt-2">
                                         <input type="text" name="name" id="name" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -223,7 +223,7 @@
                                         class="block text-sm font-medium leading-6 text-zinc-900">Email</label>
                                     <div class="mt-2">
                                         <input type="email" name="email" id="email" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -233,7 +233,7 @@
                                         class="block text-sm font-medium leading-6 text-zinc-900">Password</label>
                                     <div class="mt-2">
                                         <input type="password" name="password" id="password" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -242,8 +242,9 @@
                                     <label for="role"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Role</label>
                                     <div class="mt-2">
-                                        <select name="role" id="role" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                        <select name="role" id="role" required <select name="role"
+                                            id="role" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                             <option value="user">User</option>
                                             <option value="admin">Admin</option>
                                         </select>
@@ -268,7 +269,7 @@
             <div x-show="editModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -304,7 +305,7 @@
                                     <div class="mt-2">
                                         <input type="text" name="name" id="edit_name" x-model="currentUser.name"
                                             required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -315,7 +316,7 @@
                                     <div class="mt-2">
                                         <input type="email" name="email" id="edit_email" x-model="currentUser.email"
                                             required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -326,7 +327,7 @@
                                     </label>
                                     <div class="mt-2">
                                         <input type="password" name="password" id="edit_password"
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -336,7 +337,7 @@
                                         class="block text-sm font-medium leading-6 text-zinc-900">Role</label>
                                     <div class="mt-2">
                                         <select name="role" id="edit_role" x-model="currentUser.role" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                             <option value="user">User</option>
                                             <option value="admin">Admin</option>
                                         </select>

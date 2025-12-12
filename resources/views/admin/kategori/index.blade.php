@@ -68,65 +68,84 @@
             <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
                 @if ($kategori->count() > 0)
                     <!-- Modern Grid Cards Layout -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-zinc-50/50">
-                        @foreach ($kategori as $item)
-                            <div
-                                class="bg-white rounded-xl shadow-sm border border-zinc-200 p-6 flex flex-col hover:shadow-md transition-all duration-300 group">
-                                <div class="flex justify-between items-start mb-4">
-                                    <!-- Icon Decorator -->
-                                    <div
-                                        class="p-3 bg-comfy-50 rounded-xl text-comfy-800 group-hover:scale-110 transition-transform duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
-                                        </svg>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div
-                                        class="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
-                                        <button
-                                            @click="editKategori({
-                                                id: '{{ $item->id }}',
-                                                kategori: '{{ addslashes($item->kategori) }}',
-                                                deskripsi: '{{ addslashes($item->deskripsi) }}'
-                                            })"
-                                            class="p-2 text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
-                                            title="Edit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </button>
-                                        <button @click="confirmDelete('{{ route('kategori.destroy', $item->id) }}')"
-                                            class="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                            title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <h3 class="text-lg font-bold text-zinc-900 mb-1">{{ $item->kategori }}</h3>
-                                    <p class="text-sm text-zinc-500 line-clamp-3 leading-relaxed">
-                                        {{ $item->deskripsi }}
-                                    </p>
-                                </div>
-
-                                <div
-                                    class="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-400">
-                                    <span>Ditambahkan {{ $item->created_at->diffForHumans() }}</span>
-                                    <span>#{{ $item->id }}</span>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-zinc-200">
+                            <thead class="bg-zinc-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        No
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        Nama Kategori
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        Total Produk
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        Deskripsi
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-center text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-zinc-200">
+                                @foreach ($kategori as $index => $item)
+                                    <tr class="hover:bg-zinc-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
+                                            {{ $kategori->firstItem() + $index }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-zinc-900">{{ $item->kategori }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                class="inline-flex items-center rounded-md bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 ring-1 ring-inset ring-zinc-500/10">
+                                                {{ $item->produk_count }} Produk
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-zinc-500 line-clamp-2">{{ $item->deskripsi }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                            <div class="flex justify-center gap-2">
+                                                <button
+                                                    @click="editKategori({
+                                                    id: '{{ $item->id }}',
+                                                    kategori: '{{ addslashes($item->kategori) }}',
+                                                    deskripsi: '{{ addslashes($item->deskripsi) }}'
+                                                })"
+                                                    class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 p-2 rounded-lg transition-colors"
+                                                    title="Edit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </button>
+                                                <button @click="confirmDelete('{{ route('kategori.destroy', $item->id) }}')"
+                                                    class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors"
+                                                    title="Hapus">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 @else
                     <div class="text-center py-16">
@@ -162,12 +181,12 @@
         </div>
 
         <!-- Create Modal -->
-        <div x-show="createModalOpen" class="relative z-50 pointer-events-none" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true" x-cloak>
+        <div x-show="createModalOpen" class="relative z-50 pointer-events-none" aria-labelledby="modal-title"
+            role="dialog" aria-modal="true" x-cloak>
             <div x-show="createModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -200,8 +219,9 @@
                                     <label for="kategori" class="block text-sm font-medium leading-6 text-zinc-900">Nama
                                         Kategori</label>
                                     <div class="mt-2">
-                                        <input type="text" name="kategori" id="kategori" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                        <input type="text" name="kategori" id="kategori" required <input
+                                            type="text" name="kategori" id="kategori" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -210,8 +230,9 @@
                                     <label for="deskripsi"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
-                                        <textarea id="deskripsi" name="deskripsi" rows="3" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                        <textarea id="deskripsi" name="deskripsi" rows="3" required <textarea id="deskripsi" name="deskripsi"
+                                            rows="3" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +254,7 @@
             <div x-show="editModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -269,7 +290,7 @@
                                     <div class="mt-2">
                                         <input type="text" name="kategori" id="edit_kategori"
                                             x-model="currentKategori.kategori" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -279,7 +300,7 @@
                                         class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
                                         <textarea id="edit_deskripsi" name="deskripsi" rows="3" x-model="currentKategori.deskripsi" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
                             </div>

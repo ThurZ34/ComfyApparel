@@ -204,7 +204,7 @@
             <div x-show="createModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -237,8 +237,9 @@
                                     <label for="nama" class="block text-sm font-medium leading-6 text-zinc-900">Nama
                                         Produk</label>
                                     <div class="mt-2">
-                                        <input type="text" name="nama" id="nama" required
-                                            class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                        <input type="text" name="nama" id="nama"
+                                            x-model="currentProduct.nama" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -247,9 +248,10 @@
                                     <label for="kategori_id"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Kategori</label>
                                     <div class="mt-2">
-                                        <select id="kategori_id" name="kategori_id" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
-                                            <option value="" disabled selected>Pilih Kategori</option>
+                                        <select id="kategori_id" name="kategori_id" x-model="currentProduct.kategori_id"
+                                            required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            <option value="" disabled>Pilih Kategori</option>
                                             @foreach ($kategori as $item)
                                                 <option value="{{ $item->id }}">{{ $item->kategori }}</option>
                                             @endforeach
@@ -261,24 +263,25 @@
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="harga"
-                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Harga
-                                            (Rp)</label>
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Harga (Rp)</label>
                                         <div class="mt-2 relative rounded-md shadow-sm">
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                 <span class="text-zinc-500 sm:text-sm">Rp</span>
                                             </div>
-                                            <input type="number" name="harga" id="harga" required
-                                                class="p-4 block w-full rounded-md border-0 py-1.5 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                            <input type="number" name="harga" id="harga"
+                                                x-model="currentProduct.harga" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
                                                 placeholder="0">
                                         </div>
                                     </div>
                                     <div>
                                         <label for="stok"
-                                            class="p-4 block text-sm font-medium leading-6 text-zinc-900">Stok</label>
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Stok</label>
                                         <div class="mt-2">
-                                            <input type="number" name="stok" id="stok" required
-                                                class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            <input type="number" name="stok" id="stok"
+                                                x-model="currentProduct.stok" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
                                 </div>
@@ -286,21 +289,28 @@
                                 <!-- Deskripsi -->
                                 <div>
                                     <label for="deskripsi"
-                                        class="p-4 block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
+                                        class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
-                                        <textarea id="deskripsi" name="deskripsi" rows="3"
-                                            class="p-4 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                        <textarea id="deskripsi" name="deskripsi" rows="3" x-model="currentProduct.deskripsi"
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
 
                                 <!-- Gambar -->
-                                <div>
-                                    <label for="gambar"
-                                        class="p-4 block text-sm font-medium leading-6 text-zinc-900">Gambar
-                                        Produk</label>
-                                    <div class="mt-2">
-                                        <input type="file" name="gambar" id="gambar" accept="image/*" required
-                                            class="block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-comfy-50 file:text-comfy-800 hover:file:bg-comfy-100">
+                                <div class="flex items-center gap-4">
+                                    <div x-show="currentProduct.gambar_url" class="shrink-0">
+                                        <img :src="currentProduct.gambar_url" alt="Current Image"
+                                            class="h-16 w-16 object-cover rounded-md border border-zinc-200">
+                                    </div>
+                                    <div class="grow">
+                                        <label for="gambar"
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Gambar
+                                            Produk</label>
+                                        <div class="mt-2">
+                                            <input type="file" name="gambar" id="gambar" accept="image/*"
+                                                required
+                                                class="block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-comfy-50 file:text-comfy-800 hover:file:bg-comfy-100">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +332,7 @@
             <div x-show="editModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity pointer-events-auto"></div>
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto pointer-events-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -358,7 +368,7 @@
                                     <div class="mt-2">
                                         <input type="text" name="nama" id="edit_nama"
                                             x-model="currentProduct.nama" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
 
@@ -369,7 +379,7 @@
                                     <div class="mt-2">
                                         <select id="edit_kategori_id" name="kategori_id"
                                             x-model="currentProduct.kategori_id" required
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                             <option value="" disabled>Pilih Kategori</option>
                                             @foreach ($kategori as $item)
                                                 <option :value="{{ $item->id }}"
@@ -392,7 +402,7 @@
                                             </div>
                                             <input type="number" name="harga" id="edit_harga"
                                                 x-model="currentProduct.harga" required
-                                                class="block w-full rounded-md border-0 py-1.5 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                                class="block w-full rounded-md border-0 py-3 px-4 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
                                     <div>
@@ -401,7 +411,7 @@
                                         <div class="mt-2">
                                             <input type="number" name="stok" id="edit_stok"
                                                 x-model="currentProduct.stok" required
-                                                class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +422,7 @@
                                         class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
                                         <textarea id="edit_deskripsi" name="deskripsi" rows="3" x-model="currentProduct.deskripsi"
-                                            class="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
 
