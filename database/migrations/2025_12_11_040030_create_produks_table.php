@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('stok');
             $table->text('deskripsi');
             $table->string('gambar');
+            $table->unsignedBigInteger('kategori_id');
+            $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
             $table->timestamps();
         });
     }

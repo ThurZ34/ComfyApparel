@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 
+use App\Models\Kategori;
+
 class ProdukController extends Controller
 {
     /**
@@ -14,8 +16,19 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produk = Produk::all();
-        return view('admin.produk.index', compact('produk'));
+        $search = request()->input('search');
+
+        $query = Produk::with('kategori');
+
+        $query->when($search, function ($q, $searchTerm) {
+            $q->where('nama', 'like', "%{$searchTerm}%")
+              ->orWhere('deskripsi', 'like', "%{$searchTerm}%");
+        });
+
+        $produk = $query->latest()->paginate(10)->withQueryString();
+        $kategori = Kategori::all();
+        
+        return view('admin.produk.index', compact('produk', 'kategori'));
     }
 
     /**
@@ -36,17 +49,19 @@ class ProdukController extends Controller
             'harga' => 'required',
             'stok' => 'required',
             'deskripsi' => 'required',
+            'kategori_id' => 'required|exists:kategoris,id',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $foto = $request->file('gambar');
         $path = $foto->store('produk', 'public');
 
-        $produk = Produk::create([
+        Produk::create([
             'nama' => $request->nama,
             'harga' => $request->harga,
             'stok' => $request->stok,
             'deskripsi' => $request->deskripsi,
+            'kategori_id' => $request->kategori_id,
             'gambar' => $path,
         ]);
 
@@ -79,35 +94,28 @@ class ProdukController extends Controller
             'harga' => 'required',
             'stok' => 'required',
             'deskripsi' => 'required',
+            'kategori_id' => 'required|exists:kategoris,id',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $produk = Produk::findOrFail($produk->id);
+        $dataToUpdate = [
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'deskripsi' => $request->deskripsi,
+            'kategori_id' => $request->kategori_id,
+        ];
 
         if ($request->hasFile('gambar')) {
-        
             if($produk->gambar) {
                 Storage::disk('public')->delete($produk->gambar);
             }
-
             $gambar = $request->file('gambar');
             $path = $gambar->store('produk', 'public');
-
-            $produk->update([
-                'nama' => $request->nama,
-                'harga' => $request->harga,
-                'stok' => $request->stok,
-                'deskripsi' => $request->deskripsi,
-                'gambar' => $path,
-            ]);
-        } else {
-            $produk->update([
-                'nama' => $request->nama,
-                'harga' => $request->harga,
-                'stok' => $request->stok,
-                'deskripsi' => $request->deskripsi,
-            ]);
+            $dataToUpdate['gambar'] = $path;
         }
+
+        $produk->update($dataToUpdate);
         
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui');
     }
