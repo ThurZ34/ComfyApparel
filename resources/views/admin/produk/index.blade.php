@@ -356,8 +356,7 @@
                             </button>
                         </div>
 
-                        <form x-bind:action="'/admin/produk/' + currentProduct.id" method="POST"
-                            enctype="multipart/form-data">
+                        <form x-bind:action="'/produk/' + currentProduct.id" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="px-4 py-5 sm:p-6 space-y-4">
