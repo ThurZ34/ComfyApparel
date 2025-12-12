@@ -4,12 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
+use App\Models\Produk;
+use App\Models\Kategori;
+use App\Http\Middleware\IsAdmin;
 
 Route::get('/', function () {
-    return view('landing.home');
+    $produks = Produk::with('kategori')->latest()->take(8)->get();
+    $kategoris = Kategori::all();
+    return view('landing.home', compact('produks', 'kategoris'));
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(IsAdmin::class)->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');

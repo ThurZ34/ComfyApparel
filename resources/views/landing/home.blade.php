@@ -120,10 +120,6 @@
                         class="rounded-full bg-comfy-500 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-comfy-500/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-comfy-500 transition-all hover:scale-105">
                         Shop Collection
                     </a>
-                    <a href="#"
-                        class="text-sm font-semibold leading-6 text-white hover:text-comfy-200 transition-colors">
-                        View Lookbook <span aria-hidden="true">→</span>
-                    </a>
                 </div>
             </div>
         </div>
@@ -140,82 +136,33 @@
             </div>
 
             <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                <!-- Category 1 -->
-                <div class="group relative">
-                    <div
-                        class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl bg-zinc-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative">
-                        <!-- Placeholder using auth-bg.png or generating more not needed, css pattern is safer or simpler img -->
-                        <div class="absolute inset-0 bg-comfy-200 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-16 text-comfy-800/50">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                            </svg>
+                @foreach ($kategoris as $kategori)
+                    <div class="group relative">
+                        <div
+                            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl bg-zinc-100 lg:aspect-none group-hover:opacity-75 lg:h-80 relative transition-all duration-300">
+                            <!-- Placeholder Pattern since no image in DB -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-comfy-50 to-zinc-200 flex items-center justify-center">
+                                <span class="text-9xl text-comfy-800/10 font-serif font-bold select-none">
+                                    {{ substr($kategori->kategori, 0, 1) }}
+                                </span>
+                            </div>
                         </div>
-                        <!-- If we had images we would put them here -->
-                    </div>
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-zinc-900">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Essential Linens
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-zinc-500">Breathable & Light</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 2 -->
-                <div class="group relative">
-                    <div
-                        class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl bg-zinc-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative">
-                        <div class="absolute inset-0 bg-comfy-500/40 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-16 text-comfy-800/50">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-                            </svg>
+                        <div class="mt-4 flex justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold text-zinc-900">
+                                    <a href="#">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        {{ $kategori->kategori }}
+                                    </a>
+                                </h3>
+                                <p class="mt-1 text-sm text-zinc-500 line-clamp-2">
+                                    {{ $kategori->deskripsi }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-zinc-900">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Evening Wear
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-zinc-500">Elegant & Soft</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 3 -->
-                <div class="group relative">
-                    <div
-                        class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl bg-zinc-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative">
-                        <div class="absolute inset-0 bg-comfy-800/30 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-16 text-comfy-800/50">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-zinc-900">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Best Sellers
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-zinc-500">Customer Favorites</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -231,29 +178,36 @@
             </div>
 
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                @foreach (range(1, 4) as $item)
+                @foreach ($produks as $produk)
                     <div class="group relative">
                         <div
                             class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-zinc-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative">
-                            <div class="absolute inset-0 bg-white flex items-center justify-center text-zinc-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-10">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                </svg>
-                            </div>
+                            @if ($produk->gambar)
+                                <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama }}"
+                                    class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                            @else
+                                <div class="absolute inset-0 bg-white flex items-center justify-center text-zinc-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-10">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                    </svg>
+                                </div>
+                            @endif
                         </div>
                         <div class="mt-4 flex justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-zinc-900">
                                     <a href="#">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
-                                        Linen Breeze Shirt
+                                        {{ $produk->nama }}
                                     </a>
                                 </h3>
-                                <p class="mt-1 text-sm text-zinc-500">Natural / Sage</p>
+                                <p class="mt-1 text-sm text-zinc-500">
+                                    {{ $produk->kategori->kategori ?? 'Uncategorized' }}</p>
                             </div>
-                            <p class="text-sm font-medium text-comfy-800">$89</p>
+                            <p class="text-sm font-medium text-comfy-800">Rp
+                                {{ number_format($produk->harga, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 @endforeach

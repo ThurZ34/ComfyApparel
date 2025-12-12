@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->integer('stok');
             $table->text('deskripsi');
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
             $table->timestamps();
