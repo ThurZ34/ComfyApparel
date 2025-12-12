@@ -67,17 +67,60 @@
 
                 <!-- Auth Buttons -->
                 <div class="hidden md:flex items-center gap-4">
-                    <a href="{{ route('login') }}" class="text-sm font-semibold transition-colors"
-                        :class="scrolled ? 'text-comfy-800 hover:text-comfy-600' :
-                            'text-comfy-800 lg:text-white lg:hover:text-comfy-200'">
-                        Log in
-                    </a>
-                    <a href="{{ route('register') }}"
-                        class="rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-all hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :class="scrolled ? 'bg-comfy-800 text-white hover:bg-comfy-800/90' :
-                            'bg-white text-comfy-800 hover:bg-zinc-100'">
-                        Sign Up
-                    </a>
+                    @auth
+                        <!-- Profile Dropdown -->
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" @click.outside="open = false"
+                                class="flex items-center gap-2 focus:outline-none group">
+                                <span class="text-sm font-semibold transition-colors"
+                                    :class="scrolled ? 'text-comfy-800' : 'text-comfy-800 lg:text-white'">
+                                    {{ Auth::user()->name }}
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor"
+                                    class="size-4 transition-transform duration-200"
+                                    :class="[open ? 'rotate-180' : '', scrolled ? 'text-zinc-600' :
+                                        'text-zinc-600 lg:text-zinc-300'
+                                    ]">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
+                                x-transition:enter-end="transform opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="transform opacity-100 scale-100"
+                                x-transition:leave-end="transform opacity-0 scale-95"
+                                class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black/5 focus:outline-none py-1 z-50">
+                                <a href="{{ route('dashboard') }}"
+                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                    Dashboard
+                                </a>
+                                <div class="border-t border-zinc-100 my-1"></div>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        Log Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="text-sm font-semibold transition-colors"
+                            :class="scrolled ? 'text-comfy-800 hover:text-comfy-600' :
+                                'text-comfy-800 lg:text-white lg:hover:text-comfy-200'">
+                            Log in
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-all hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                            :class="scrolled ? 'bg-comfy-800 text-white hover:bg-comfy-800/90' :
+                                'bg-white text-comfy-800 hover:bg-zinc-100'">
+                            Sign Up
+                        </a>
+                    @endauth
                 </div>
 
                 <!-- Mobile Menu Button -->
