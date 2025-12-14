@@ -61,4 +61,8 @@ class LandingController extends Controller
 
         return view('landing.detail-produk', compact('produk', 'relatedProducts'));
     }
+    public function profil()
+    {
+        return view('landing.profil');
+    }
 }

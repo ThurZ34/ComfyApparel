@@ -99,6 +99,10 @@
                                     class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
                                     Dashboard
                                 </a>
+                                <a href="{{ route('landing.profil') }}"
+                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                    Profil
+                                </a>
                                 <div class="border-t border-zinc-100 my-1"></div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

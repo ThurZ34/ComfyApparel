@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingController::class, 'index'])->name('landing.home');
 Route::get('/katalog', [LandingController::class, 'produk'])->name('landing.produk');
 Route::get('/produk/{produk}', [LandingController::class, 'show'])->name('landing.detail');
+Route::get('/profil', [LandingController::class, 'profil'])->name('landing.profil');
 
 Route::middleware(IsAdmin::class)->group(function () {
     Route::get('/dashboard', function () {

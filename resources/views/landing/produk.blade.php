@@ -87,10 +87,17 @@
                                 x-transition:leave="transition ease-in duration-75"
                                 x-transition:leave-start="transform opacity-100 scale-100"
                                 x-transition:leave-end="transform opacity-0 scale-95"
+                                @php
+                                if (Auth::user()->role == 'admin') {
                                 class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black/5 focus:outline-none py-1 z-50">
                                 <a href="{{ route('dashboard') }}"
                                     class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
                                     Dashboard
+                                </a>}
+                                @endphp
+                                <a href="{{ route('landing.profil') }}"
+                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                    Profil
                                 </a>
                                 <div class="border-t border-zinc-100 my-1"></div>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -203,6 +210,12 @@
                                     <div
                                         class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                                         Low Stock
+                                    </div>
+                                @endif
+                                @if ($produk->stok == 0)
+                                    <div
+                                        class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Out of Stock
                                     </div>
                                 @endif
                                 @if ($produk->created_at->diffInDays(now()) < 7)
