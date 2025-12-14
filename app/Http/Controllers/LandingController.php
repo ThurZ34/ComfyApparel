@@ -65,4 +65,17 @@ class LandingController extends Controller
     {
         return view('landing.profil');
     }
+
+    public function keranjang()
+    {
+        // Mock cart data for display purposes
+        $cartItems = Produk::take(3)->get()->map(function ($item) {
+            $item->quantity = rand(1, 3);
+            $item->selected_size = 'M';
+            $item->selected_color = 'White';
+            return $item;
+        });
+
+        return view('landing.keranjang', compact('cartItems'));
+    }
 }
