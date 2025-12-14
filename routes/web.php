@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing.home');
 Route::get('/katalog', [LandingController::class, 'produk'])->name('landing.produk');
+Route::get('/produk/{produk}', [LandingController::class, 'show'])->name('landing.detail');
 
 Route::middleware(IsAdmin::class)->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::resource('produk', ProdukController::class);
+    Route::resource('produk', ProdukController::class)->except(['show']);
     Route::resource('kategori', KategoriController::class);
     Route::resource('pengguna', UserController::class);
 });

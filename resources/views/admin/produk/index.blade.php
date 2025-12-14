@@ -14,6 +14,8 @@
             nama: '',
             harga: '',
             stok: '',
+            ukuran: '',
+            warna: '',
             deskripsi: '',
             kategori_id: null,
             gambar_url: ''
@@ -25,6 +27,8 @@
                 nama: '',
                 harga: '',
                 stok: '',
+                ukuran: '',
+                warna: '',
                 deskripsi: '',
                 kategori_id: null,
                 gambar_url: ''
@@ -36,6 +40,8 @@
                 nama: product.nama,
                 harga: product.harga,
                 stok: product.stok,
+                ukuran: product.ukuran,
+                warna: product.warna,
                 deskripsi: product.deskripsi || '',
                 kategori_id: product.kategori_id,
                 gambar_url: product.gambar_url
@@ -131,10 +137,22 @@
                                             <span class="text-lg font-bold text-comfy-800">
                                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                                             </span>
-                                            <span
-                                                class="text-xs font-medium text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md">
-                                                Stok: {{ $item->stok }}
-                                            </span>
+                                            <div class="flex flex-col items-end gap-1">
+                                                <span
+                                                    class="text-xs font-medium text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md">
+                                                    Stok: {{ $item->stok }}
+                                                </span>
+                                                <div class="flex gap-1">
+                                                    <span
+                                                        class="text-[10px] font-medium text-zinc-500 border border-zinc-200 px-1.5 py-0.5 rounded">
+                                                        {{ $item->ukuran }}
+                                                    </span>
+                                                    <span
+                                                        class="text-[10px] font-medium text-zinc-500 border border-zinc-200 px-1.5 py-0.5 rounded">
+                                                        {{ $item->warna }}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Actions -->
@@ -145,6 +163,8 @@
                                                     nama: '{{ addslashes($item->nama) }}',
                                                     harga: '{{ $item->harga }}',
                                                     stok: '{{ $item->stok }}',
+                                                    ukuran: '{{ $item->ukuran }}',
+                                                    warna: '{{ $item->warna }}',
                                                     deskripsi: '{{ addslashes($item->deskripsi) }}',
                                                     kategori_id: '{{ $item->kategori_id }}',
                                                     gambar_url: '{{ $item->gambar ? Storage::url($item->gambar) : '' }}'
@@ -286,6 +306,30 @@
                                     </div>
                                 </div>
 
+                                <!-- Ukuran & Warna -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="ukuran"
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Ukuran</label>
+                                        <div class="mt-2">
+                                            <input type="text" name="ukuran" id="ukuran"
+                                                x-model="currentProduct.ukuran" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                                placeholder="S, M, L, XL">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="warna"
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Warna</label>
+                                        <div class="mt-2">
+                                            <input type="text" name="warna" id="warna"
+                                                x-model="currentProduct.warna" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                                placeholder="Hitam, Putih, Merah">
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Deskripsi -->
                                 <div>
                                     <label for="deskripsi"
@@ -411,6 +455,30 @@
                                             <input type="number" name="stok" id="edit_stok"
                                                 x-model="currentProduct.stok" required
                                                 class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ukuran & Warna -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="edit_ukuran"
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Ukuran</label>
+                                        <div class="mt-2">
+                                            <input type="text" name="ukuran" id="edit_ukuran"
+                                                x-model="currentProduct.ukuran" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                                placeholder="S, M, L, XL">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="edit_warna"
+                                            class="block text-sm font-medium leading-6 text-zinc-900">Warna</label>
+                                        <div class="mt-2">
+                                            <input type="text" name="warna" id="edit_warna"
+                                                x-model="currentProduct.warna" required
+                                                class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                                placeholder="Hitam, Putih, Merah">
                                         </div>
                                     </div>
                                 </div>

@@ -255,7 +255,7 @@
                         <div class="mt-4 flex justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-zinc-900">
-                                    <a href="#">
+                                    <a href="{{ route('landing.detail', $produk->id) }}">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
                                         {{ $produk->nama }}
                                     </a>

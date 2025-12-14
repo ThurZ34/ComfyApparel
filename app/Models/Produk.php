@@ -11,6 +11,8 @@ class Produk extends Model
         'nama',
         'harga',
         'stok',
+        'ukuran',
+        'warna',
         'deskripsi',
         'gambar',
     ];

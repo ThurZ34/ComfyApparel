@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->integer('stok');
+            $table->string('ukuran');
+            $table->string('warna');
             $table->text('deskripsi');
             $table->string('gambar')->nullable();
             $table->unsignedBigInteger('kategori_id');

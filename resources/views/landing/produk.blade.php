@@ -233,7 +233,7 @@
                                     {{ $produk->kategori->kategori ?? 'Collection' }}</p>
                                 <h3
                                     class="text-base font-bold text-zinc-900 mb-1 group-hover:text-comfy-800 transition-colors">
-                                    <a href="#">
+                                    <a href="{{ route('landing.detail', $produk->id) }}">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
                                         {{ $produk->nama }}
                                     </a>

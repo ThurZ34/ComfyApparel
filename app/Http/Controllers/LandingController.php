@@ -47,4 +47,18 @@ class LandingController extends Controller
 
         return view('landing.produk', compact('produks', 'kategoris'));
     }
+    /**
+     * Display the specified product detail.
+     */
+    public function show(Produk $produk)
+    {
+        $produk->load('kategori');
+        
+        $relatedProducts = Produk::where('kategori_id', $produk->kategori_id)
+            ->where('id', '!=', $produk->id)
+            ->take(4)
+            ->get();
+
+        return view('landing.detail-produk', compact('produk', 'relatedProducts'));
+    }
 }

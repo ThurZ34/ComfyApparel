@@ -75,4 +75,16 @@
 
         </nav>
 
+        <!-- Footer / Back Button -->
+        <div class="border-t border-zinc-200 p-3 bg-zinc-50/50">
+            <a href="{{ route('landing.home') }}"
+                class="flex items-center gap-3 px-3 py-3 rounded-lg text-zinc-600 hover:bg-red-50 hover:text-red-600 transition-all duration-200 group">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6 group-hover:-translate-x-1 transition-transform">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                <span class="whitespace-nowrap font-medium">Kembali</span>
+            </a>
+        </div>
+
     </aside>
