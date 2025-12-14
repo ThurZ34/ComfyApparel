@@ -1,153 +1,20 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full scroll-smooth">
+@extends('layouts.landing')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title', 'ComfyApparel - Comfort Meets Style')
+@section('nav-text-class-lg', 'lg:text-white')
+@section('nav-hover-class-lg', 'lg:hover:text-comfy-200')
+@section('nav-icon-class-lg', 'lg:text-zinc-300')
 
-    <title>ComfyApparel - Comfort Meets Style</title>
+@section('main-wrapper')
+    @yield('content')
+@endsection
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
-        rel="stylesheet">
-
-    <!-- Styles & Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        [x-cloak] {
-            display: none !important;
-        }
-    </style>
-</head>
-
-<body class="font-sans antialiased text-zinc-900 bg-white" x-data="{ scrolled: false }"
-    @scroll.window="scrolled = (window.pageYOffset > 20)">
-
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300"
-        :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <a href="/" class="flex items-center gap-2 group">
-                    <div
-                        class="bg-comfy-800 text-white p-1.5 rounded-lg shadow-sm shadow-comfy-800/20 transition-transform group-hover:scale-105">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight"
-                        :class="scrolled ? 'text-comfy-800' : 'text-comfy-800 lg:text-white'">
-                        ComfyApparel
-                    </span>
-                </a>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#home" class="text-sm font-medium hover:text-comfy-500 transition-colors"
-                        :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Home</a>
-                    <a href="#categories" class="text-sm font-medium hover:text-comfy-500 transition-colors"
-                        :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Categories</a>
-                    <a href="{{ route('landing.produk') }}"
-                        class="text-sm font-medium hover:text-comfy-500 transition-colors"
-                        :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Products</a>
-                    <a href="#about" class="text-sm font-medium hover:text-comfy-500 transition-colors"
-                        :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">About
-                        Us</a>
-                </div>
-
-                <!-- Auth Buttons -->
-                <div class="hidden md:flex items-center gap-4">
-                    @auth
-                        <!-- Profile Dropdown -->
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" @click.outside="open = false"
-                                class="flex items-center gap-2 focus:outline-none group">
-                                <span class="text-sm font-semibold transition-colors"
-                                    :class="scrolled ? 'text-comfy-800' : 'text-comfy-800 lg:text-white'">
-                                    {{ Auth::user()->name }}
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor"
-                                    class="size-4 transition-transform duration-200"
-                                    :class="[open ? 'rotate-180' : '', scrolled ? 'text-zinc-600' :
-                                        'text-zinc-600 lg:text-zinc-300'
-                                    ]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-
-                            <!-- Dropdown Menu -->
-                            <div x-show="open" x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
-                                x-transition:enter-end="transform opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="transform opacity-100 scale-100"
-                                x-transition:leave-end="transform opacity-0 scale-95"
-                                class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black/5 focus:outline-none py-1 z-50">
-                                <a href="{{ route('dashboard') }}"
-                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
-                                    Dashboard
-                                </a>
-                                <a href="{{ route('landing.profil') }}"
-                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
-                                    Profil
-                                </a>
-                                <div class="border-t border-zinc-100 my-1"></div>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                        Log Out
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm font-semibold transition-colors"
-                            :class="scrolled ? 'text-comfy-800 hover:text-comfy-600' :
-                                'text-comfy-800 lg:text-white lg:hover:text-comfy-200'">
-                            Log in
-                        </a>
-                        <a href="{{ route('register') }}"
-                            class="rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-all hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                            :class="scrolled ? 'bg-comfy-800 text-white hover:bg-comfy-800/90' :
-                                'bg-white text-comfy-800 hover:bg-zinc-100'">
-                            Sign Up
-                        </a>
-                    @endauth
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button type="button" class="text-zinc-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+@section('content')
     <!-- Hero Section -->
     <div id="home" class="relative bg-zinc-900">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero-banner.png') }}" class="h-full w-full object-cover opacity-60"
-                alt="Hero Banner">
+            <img src="{{ asset('images/hero-banner.png') }}" class="h-full w-full object-cover opacity-60" alt="Hero Banner">
             <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
         </div>
 
@@ -200,8 +67,7 @@
                         </div>
                         <div class="flex flex-1 flex-col justify-between p-6">
                             <div class="flex-1">
-                                <h3
-                                    class="text-xl font-bold text-zinc-900 group-hover:text-comfy-800 transition-colors">
+                                <h3 class="text-xl font-bold text-zinc-900 group-hover:text-comfy-800 transition-colors">
                                     <a href="#">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
                                         {{ $kategori->kategori }}
@@ -213,8 +79,8 @@
                             </div>
                             <div class="mt-6 flex items-center gap-2 text-sm font-medium text-comfy-800">
                                 <span>Explore Collection</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="2" stroke="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor"
                                     class="size-4 transform transition-transform group-hover:translate-x-1">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -346,107 +212,4 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="bg-comfy-800 text-white" aria-labelledby="footer-heading">
-        <h2 id="footer-heading" class="sr-only">Footer</h2>
-        <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
-            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                <div class="space-y-8">
-                    <div class="flex items-center gap-2">
-                        <div class="bg-white text-comfy-800 p-1.5 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                            </svg>
-                        </div>
-                        <span class="font-bold text-xl tracking-tight">ComfyApparel</span>
-                    </div>
-                    <p class="text-sm leading-6 text-comfy-200">
-                        Making the world a more comfortable place, one stitch at a time.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-white hover:text-comfy-200">
-                            <span class="sr-only">Instagram</span>
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.484 2h.166zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm5.338-3.205a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                        <a href="#" class="text-white hover:text-comfy-200">
-                            <span class="sr-only">Twitter</span>
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold leading-6 text-white">Shop</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li>
-                                    <a href="#" class="text-sm leading-6 text-comfy-200 hover:text-white">New
-                                        Arrivals</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Tops</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Bottoms</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Accessories</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mt-10 md:mt-0">
-                            <h3 class="text-sm font-semibold leading-6 text-white">Company</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li>
-                                    <a href="#" class="text-sm leading-6 text-comfy-200 hover:text-white">About
-                                        Us</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Sustainability</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Press</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold leading-6 text-white">Legal</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li>
-                                    <a href="#"
-                                        class="text-sm leading-6 text-comfy-200 hover:text-white">Privacy Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-sm leading-6 text-comfy-200 hover:text-white">Terms
-                                        of Service</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
-                <p class="text-xs leading-5 text-comfy-200">&copy; 2025 ComfyApparel, Inc. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-
-</html>
+@endsection
