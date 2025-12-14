@@ -58,7 +58,8 @@
                         :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Home</a>
                     <a href="#categories" class="text-sm font-medium hover:text-comfy-500 transition-colors"
                         :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Categories</a>
-                    <a href="#products" class="text-sm font-medium hover:text-comfy-500 transition-colors"
+                    <a href="{{ route('landing.produk') }}"
+                        class="text-sm font-medium hover:text-comfy-500 transition-colors"
                         :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">Products</a>
                     <a href="#about" class="text-sm font-medium hover:text-comfy-500 transition-colors"
                         :class="scrolled ? 'text-zinc-600' : 'text-zinc-800 lg:text-white lg:hover:text-comfy-200'">About
@@ -158,12 +159,6 @@
                     Discover our sustainably crafted collection designed for those who value elegance in simplicity.
                     Premium linen, earth tones, and timeless cuts.
                 </p>
-                <div class="flex items-center gap-x-6">
-                    <a href="#"
-                        class="rounded-full bg-comfy-500 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-comfy-500/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-comfy-500 transition-all hover:scale-105">
-                        Shop Collection
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -220,6 +215,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                 </svg>
+                                <a href=""></a>
                             </div>
                         </div>
                     </div>
@@ -274,7 +270,7 @@
                 @endforeach
             </div>
             <div class="mt-12 text-center">
-                <a href="#"
+                <a href="{{ route('landing.produk') }}"
                     class="inline-block rounded-full bg-comfy-800 px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-comfy-800/90 transition-all hover:scale-105">View
                     All Products</a>
             </div>
