@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\RedirectResponse;
-
-use App\Models\Kategori;
 
 class ProdukController extends Controller
 {
@@ -22,12 +20,12 @@ class ProdukController extends Controller
 
         $query->when($search, function ($q, $searchTerm) {
             $q->where('nama', 'like', "%{$searchTerm}%")
-              ->orWhere('deskripsi', 'like', "%{$searchTerm}%");
+                ->orWhere('deskripsi', 'like', "%{$searchTerm}%");
         });
 
         $produk = $query->latest()->paginate(10)->withQueryString();
         $kategori = Kategori::all();
-        
+
         return view('admin.produk.index', compact('produk', 'kategori'));
     }
 
@@ -107,7 +105,7 @@ class ProdukController extends Controller
         ];
 
         if ($request->hasFile('gambar')) {
-            if($produk->gambar) {
+            if ($produk->gambar) {
                 Storage::disk('public')->delete($produk->gambar);
             }
             $gambar = $request->file('gambar');
@@ -116,7 +114,7 @@ class ProdukController extends Controller
         }
 
         $produk->update($dataToUpdate);
-        
+
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui');
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -22,7 +22,7 @@ class UserController extends Controller
         });
 
         $user = $query->latest()->paginate(10)->withQueryString();
-        
+
         return view('admin.pengguna.index', compact('user'));
     }
 
@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'nullable',
             'role' => 'required',
         ]);
