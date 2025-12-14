@@ -1,16 +1,8 @@
 <header
     class="sticky top-0 z-40 flex h-20 w-full items-center justify-between border-b border-zinc-200 bg-white/80 px-6 backdrop-blur-md transition-all">
 
-    <!-- Left: Collapse Button & Breadcrumb -->
+    <!-- Left: Breadcrumb -->
     <div class="flex items-center gap-4">
-        <button @click="sidebarOpen = !sidebarOpen"
-            class="p-2 -ml-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-200">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-        </button>
-
         <!-- Dynamic Breadcrumb -->
         <nav class="hidden md:flex items-center text-sm font-medium text-zinc-500">
             <a href="{{ route('dashboard') }}" class="hover:text-black transition-colors">Admin</a>

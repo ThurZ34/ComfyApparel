@@ -22,8 +22,7 @@
     </style>
 </head>
 
-<body class="font-sans antialiased h-full bg-zinc-50 text-zinc-900 selection:bg-black selection:text-white"
-    x-data="{ sidebarOpen: window.innerWidth >= 1024 }" x-init="window.addEventListener('resize', () => { if (window.innerWidth >= 1024 && !sidebarOpen) sidebarOpen = true; })">
+<body class="font-sans antialiased h-full bg-zinc-50 text-zinc-900 selection:bg-black selection:text-white">
 
     <div class="min-h-screen flex">
 
@@ -31,8 +30,7 @@
         @include('layouts.partials.sidebar')
 
         <!-- Main Content Wrapper -->
-        <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out lg:pl-72"
-            :class="!sidebarOpen ? '!lg:pl-20' : ''">
+        <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out lg:pl-72">
 
             <!-- Header -->
             @include('layouts.partials.header')
