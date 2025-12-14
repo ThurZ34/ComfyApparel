@@ -6,10 +6,7 @@
 @section('nav-icon-class-lg', 'lg:text-zinc-300')
 
 @section('main-wrapper')
-    @yield('content')
-@endsection
 
-@section('content')
     <!-- Hero Section -->
     <div id="home" class="relative bg-zinc-900">
         <!-- Background Image -->

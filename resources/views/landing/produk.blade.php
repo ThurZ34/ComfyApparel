@@ -4,10 +4,7 @@
 @section('body-class', 'bg-zinc-50')
 
 @section('main-wrapper')
-    @yield('content')
-@endsection
 
-@section('content')
     <!-- Header Section -->
     <div class="pt-32 pb-12 bg-white border-b border-zinc-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
