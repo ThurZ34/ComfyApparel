@@ -65,8 +65,11 @@
                                                 </button>
                                             </div>
 
-                                            <div class="absolute top-0 right-0">
-                                                <button type="button"
+                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST"
+                                                class="absolute top-0 right-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
                                                     class="-m-2 inline-flex p-2 text-zinc-400 hover:text-red-500 transition-colors">
                                                     <span class="sr-only">Remove</span>
                                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
@@ -75,7 +78,7 @@
                                                             d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                                                     </svg>
                                                 </button>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +114,7 @@
                         <div class="flex items-center justify-between">
                             <dt class="text-sm text-zinc-600">Subtotal</dt>
                             <dd class="text-sm font-medium text-zinc-900">Rp
-                                {{ number_format($cartItems->sum(fn($i) => $i->harga * $item->quantity), 0, ',', '.') }}
+                                {{ number_format($cartItems->sum(fn($i) => $i->harga * $i->quantity), 0, ',', '.') }}
                             </dd>
                         </div>
                         <div class="flex items-center justify-between border-t border-zinc-200 pt-4">
@@ -131,7 +134,7 @@
                         <div class="flex items-center justify-between border-t border-zinc-200 pt-4">
                             <dt class="text-base font-medium text-zinc-900">Order total</dt>
                             <dd class="text-base font-medium text-zinc-900">Rp
-                                {{ number_format($cartItems->sum(fn($i) => $i->harga * $item->quantity), 0, ',', '.') }}
+                                {{ number_format($cartItems->sum(fn($i) => $i->harga * $i->quantity), 0, ',', '.') }}
                             </dd>
                         </div>
                     </dl>

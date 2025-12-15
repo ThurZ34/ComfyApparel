@@ -117,12 +117,15 @@
                         </div>
                     </div>
 
-                    <form class="mt-10" x-data="{
-                        selectedSize: '',
-                        selectedColor: '',
-                        quantity: 1,
-                        maxStock: {{ $produk->stok }}
-                    }">
+                    <form action="{{ route('cart.add', $produk->id) }}" method="POST" class="mt-10"
+                        x-data="{
+                            selectedSize: '',
+                            selectedColor: '',
+                            quantity: 1,
+                            maxStock: {{ $produk->stok }}
+                        }">
+                        @csrf
+                        <input type="hidden" name="quantity" :value="quantity">
                         <!-- Sizes -->
                         @if ($produk->ukuran)
                             <div class="mt-8">
@@ -138,7 +141,7 @@
                                             :class="selectedSize === '{{ $size }}' ?
                                                 'border-transparent bg-comfy-800 text-white hover:bg-comfy-900 ring-2 ring-comfy-800 ring-offset-2' :
                                                 'border-zinc-200 text-zinc-900 bg-white'">
-                                            <input type="radio" name="size-choice" value="{{ $size }}"
+                                            <input type="radio" name="size" value="{{ $size }}"
                                                 class="sr-only" x-model="selectedSize">
                                             <span
                                                 id="size-choice-{{ $loop->index }}-label">{{ $size }}</span>
@@ -158,7 +161,7 @@
                                         <label
                                             class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-comfy-800 transition-all"
                                             :class="selectedColor === '{{ $color }}' ? 'ring-2' : ''">
-                                            <input type="radio" name="color-choice" value="{{ $color }}"
+                                            <input type="radio" name="color" value="{{ $color }}"
                                                 class="sr-only" x-model="selectedColor">
                                             <span aria-hidden="true"
                                                 class="h-8 w-8 rounded-full border border-black/10 transition-transform active:scale-95 flex items-center justify-center text-[10px] font-bold overflow-hidden bg-zinc-100 text-zinc-900">
@@ -201,7 +204,7 @@
                                 </button>
                             </div>
 
-                            <button type="button" :disabled="!selectedSize || !selectedColor || maxStock === 0"
+                            <button type="submit" :disabled="!selectedSize || !selectedColor || maxStock === 0"
                                 class="flex-1 flex w-full items-center justify-center rounded-full border border-transparent bg-comfy-800 px-8 py-3 text-base font-medium text-white hover:bg-comfy-900 focus:outline-none focus:ring-2 focus:ring-comfy-800 focus:ring-offset-2 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg shadow-comfy-800/20 active:scale-95">
                                 <span x-show="maxStock > 0">Add to Cart</span>
                                 <span x-show="maxStock === 0">Out of Stock</span>
@@ -241,66 +244,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Related Products -->
-            @if ($relatedProducts->count() > 0)
-                <div class="mt-24">
-                    <div class="flex items-center justify-between mb-8">
-                        <h2 class="text-2xl font-bold font-serif text-zinc-900">You Might Also Like</h2>
-                        <a href="{{ route('landing.produk', ['kategori' => $produk->kategori_id]) }}"
-                            class="text-sm font-medium text-comfy-800 hover:text-comfy-900 flex items-center gap-1 group">
-                            See more
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor"
-                                class="size-4 group-hover:translate-x-1 transition-transform">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                            </svg>
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                        @foreach ($relatedProducts as $related)
-                            <div
-                                class="group relative bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden border border-zinc-100">
-                                <!-- Image -->
-                                <div class="aspect-[4/5] w-full overflow-hidden bg-zinc-200 relative">
-                                    @if ($related->gambar)
-                                        <img src="{{ Storage::url($related->gambar) }}" alt="{{ $related->nama }}"
-                                            class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110">
-                                    @else
-                                        <div
-                                            class="absolute inset-0 bg-zinc-100 flex items-center justify-center text-zinc-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                class="size-12">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                            </svg>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <!-- Content -->
-                                <div class="p-5 flex-1 flex flex-col">
-                                    <h3
-                                        class="text-base font-bold text-zinc-900 mb-1 group-hover:text-comfy-800 transition-colors">
-                                        <a href="{{ route('landing.detail', $related->id) }}">
-                                            <span aria-hidden="true" class="absolute inset-0"></span>
-                                            {{ $related->nama }}
-                                        </a>
-                                    </h3>
-                                    <div class="mt-auto flex items-center justify-between">
-                                        <p class="text-lg font-bold text-comfy-800">Rp
-                                            {{ number_format($related->harga, 0, ',', '.') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        </div>
     </main>
 
 

@@ -12,6 +12,8 @@ Route::get('/katalog', [LandingController::class, 'produk'])->name('landing.prod
 Route::get('/produk/{produk}', [LandingController::class, 'show'])->name('landing.detail');
 Route::get('/profil', [LandingController::class, 'profil'])->name('landing.profil');
 Route::get('/keranjang', [LandingController::class, 'keranjang'])->name('landing.keranjang');
+Route::post('/keranjang/add/{id}', [LandingController::class, 'addToCart'])->name('cart.add');
+Route::delete('/keranjang/remove/{id}', [LandingController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::middleware(IsAdmin::class)->group(function () {
     Route::get('/dashboard', function () {

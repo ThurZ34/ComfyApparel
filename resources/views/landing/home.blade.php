@@ -75,14 +75,15 @@
                                 </p>
                             </div>
                             <div class="mt-6 flex items-center gap-2 text-sm font-medium text-comfy-800">
-                                <span>Explore Collection</span>
+                                <span>
+                                    <a href="{{ route('produk.index', $kategori->id) }}">Explore Collection</a>
+                                </span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor"
                                     class="size-4 transform transition-transform group-hover:translate-x-1">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                 </svg>
-                                <a href=""></a>
                             </div>
                         </div>
                     </div>

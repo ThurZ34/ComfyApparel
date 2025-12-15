@@ -68,14 +68,51 @@ class LandingController extends Controller
 
     public function keranjang()
     {
-        // Mock cart data for display purposes
-        $cartItems = Produk::take(3)->get()->map(function ($item) {
-            $item->quantity = rand(1, 3);
-            $item->selected_size = 'M';
-            $item->selected_color = 'White';
-            return $item;
-        });
+        $cart = session()->get('cart', []);
+        
+        // Transform session cart data into a collection of objects for the view
+        $cartItems = collect($cart)->map(function($details, $id) {
+            $product = Produk::find($id);
+            if ($product) {
+                // Determine quantity locally to avoid saving it to the database model accidentally
+                $product->quantity = $details['quantity'];
+                $product->selected_size = $details['size'] ?? 'M'; 
+                $product->selected_color = $details['color'] ?? 'Standard';
+                return $product;
+            }
+            return null;
+        })->filter(); // Remove nulls if product deleted from DB
 
         return view('landing.keranjang', compact('cartItems'));
+    }
+
+    public function addToCart(Request $request, $id)
+    {
+        $product = Produk::findOrFail($id);
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "quantity" => 1,
+                "size" => $request->size ?? 'M',
+                "color" => $request->color ?? 'Standard'
+            ];
+        }
+
+        session()->put('cart', $cart);
+        
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
+    public function removeFromCart($id)
+    {
+        $cart = session()->get('cart');
+        if(isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+        return redirect()->back()->with('success', 'Product removed successfully!');
     }
 }
