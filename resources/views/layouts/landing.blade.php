@@ -98,23 +98,23 @@
                                 class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black/5 focus:outline-none py-1 z-50">
                                 @if (Auth::user()->role === 'admin')
                                     <a href="{{ route('dashboard') }}"
-                                        class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                        class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 hover:rounded-full transition-colors">
                                         Dashboard
                                     </a>
                                 @endif
                                 <a href="{{ route('landing.profil') }}"
-                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 hover:rounded-full transition-colors">
                                     Profil
                                 </a>
                                 <a href="{{ route('landing.keranjang') }}"
-                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors">
+                                    class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 hover:rounded-full transition-colors">
                                     Keranjang
                                 </a>
                                 <div class="border-t border-zinc-100 my-1"></div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:rounded-full transition-colors">
                                         Log Out
                                     </button>
                                 </form>

@@ -103,7 +103,7 @@ class LandingController extends Controller
 
         session()->put('cart', $cart);
         
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('success', 'Barang anda sudah di masukkan ke keranjang, silahkan checkout');
     }
 
     public function removeFromCart($id)
