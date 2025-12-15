@@ -70,6 +70,20 @@
                 <!-- Auth Buttons -->
                 <div class="hidden md:flex items-center gap-4">
                     @auth
+                        <!-- Balance Display -->
+                        <div
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100/50 border border-zinc-200/50 backdrop-blur-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-4 text-comfy-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V4.505c0-.986.993-1.638 1.902-1.383 2.181.61 5.397 2.457 7.078 6.942.338.904-.37 1.848-1.282 2.172l-1.07.382z" />
+                            </svg>
+                            <span class="text-sm font-medium text-zinc-900">Rp
+                                {{ number_format(Auth::user()->balance ?? 0, 0, ',', '.') }}</span>
+                            <a href="{{ route('topup.index') }}"
+                                class="ml-1 text-xs font-semibold text-comfy-600 hover:text-comfy-800 bg-comfy-100 hover:bg-comfy-200 px-2 py-0.5 rounded-full transition-colors">+</a>
+                        </div>
+
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" @click.outside="open = false"
@@ -138,10 +152,21 @@
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center gap-4">
                     @auth
+                        <!-- Mobile Balance Display (Simple) -->
+                        <div class="flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-100/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-4 text-comfy-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V4.505c0-.986.993-1.638 1.902-1.383 2.181.61 5.397 2.457 7.078 6.942.338.904-.37 1.848-1.282 2.172l-1.07.382z" />
+                            </svg>
+                            <span class="text-xs font-semibold text-zinc-900">Rp
+                                {{ number_format(Auth::user()->balance ?? 0, 0, ',', '.') }}</span>
+                        </div>
+
                         <!-- Mobile Cart Icon -->
                         <a href="{{ route('landing.keranjang') }}" class="text-zinc-600 relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 5c.07.286.074.58.012.868-.568 2.508-2.618 4.625-5.336 4.625H8.452c-2.718 0-4.768-2.117-5.336-4.625-.062-.288-.058-.582.012-.868l1.263-5c.11-.439.42-.777.839-.908 1.956-.61 4.124-.61 6.08 0 .419.13.73.469.839.908z" />
                             </svg>
@@ -150,8 +175,8 @@
 
                     <button type="button" class="text-zinc-600" @click="mobileMenuOpen = true">
                         <span class="sr-only">Open menu</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>

@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TopupController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ Route::get('/profil', [LandingController::class, 'profil'])->name('landing.profi
 Route::get('/keranjang', [LandingController::class, 'keranjang'])->name('landing.keranjang');
 Route::post('/keranjang/add/{id}', [LandingController::class, 'addToCart'])->name('cart.add');
 Route::delete('/keranjang/remove/{id}', [LandingController::class, 'removeFromCart'])->name('cart.remove');
+Route::resource('topup', TopupController::class);
 
 Route::middleware(IsAdmin::class)->group(function () {
     Route::get('/dashboard', function () {

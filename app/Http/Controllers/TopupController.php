@@ -12,7 +12,8 @@ class TopupController extends Controller
      */
     public function index()
     {
-        //
+        $topup = Topup::all();
+        return view('landing.topup', compact('topup'));
     }
 
     /**
