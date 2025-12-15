@@ -237,13 +237,24 @@
                                     </div>
                                 </div>
 
+                                <!-- Password Confirmation -->
+                                <div>
+                                    <label for="password_confirmation"
+                                        class="block text-sm font-medium leading-6 text-zinc-900">Konfirmasi
+                                        Password</label>
+                                    <div class="mt-2">
+                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                            required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
                                 <!-- Role -->
                                 <div>
                                     <label for="role"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Role</label>
                                     <div class="mt-2">
-                                        <select name="role" id="role" required <select name="role"
-                                            id="role" required
+                                        <select name="role" id="role" required
                                             class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                             <option value="user">User</option>
                                             <option value="admin">Admin</option>
