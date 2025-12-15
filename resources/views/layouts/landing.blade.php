@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8">
@@ -28,8 +28,8 @@
     </style>
 </head>
 
-<body class="font-sans antialiased text-zinc-900 @yield('body-class', 'bg-white') flex flex-col min-h-full" x-data="{ scrolled: false }"
-    @scroll.window="scrolled = (window.pageYOffset > 20)">
+<body class="font-sans antialiased text-zinc-900 @yield('body-class', 'bg-white') flex flex-col min-h-screen" x-data="{ scrolled: false, mobileMenuOpen: false }"
+    x-init="scrolled = (window.pageYOffset > 20)" @scroll.window="scrolled = (window.pageYOffset > 20)">
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300"
@@ -136,14 +136,102 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button type="button" class="text-zinc-600">
+                <div class="md:hidden flex items-center gap-4">
+                    @auth
+                        <!-- Mobile Cart Icon -->
+                        <a href="{{ route('landing.keranjang') }}" class="text-zinc-600 relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 5c.07.286.074.58.012.868-.568 2.508-2.618 4.625-5.336 4.625H8.452c-2.718 0-4.768-2.117-5.336-4.625-.062-.288-.058-.582.012-.868l1.263-5c.11-.439.42-.777.839-.908 1.956-.61 4.124-.61 6.08 0 .419.13.73.469.839.908z" />
+                            </svg>
+                        </a>
+                    @endauth
+
+                    <button type="button" class="text-zinc-600" @click="mobileMenuOpen = true">
+                        <span class="sr-only">Open menu</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen" class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+            <div x-show="mobileMenuOpen" x-transition:enter="transition-opacity ease-linear duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition-opacity ease-linear duration-300"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/30 backdrop-blur-sm" @click="mobileMenuOpen = false"></div>
+
+            <div class="fixed inset-0 z-50 flex justify-end">
+                <div x-show="mobileMenuOpen" x-transition:enter="transition ease-in-out duration-300 transform"
+                    x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+                    x-transition:leave="transition ease-in-out duration-300 transform"
+                    x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
+                    class="relative flex w-full max-w-xs flex-col bg-white pb-12 shadow-xl h-full">
+                    <div class="flex px-4 pb-2 pt-5">
+                        <button type="button"
+                            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-zinc-700"
+                            @click="mobileMenuOpen = false">
+                            <span class="sr-only">Close menu</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Menu Links -->
+                    <div class="mt-6 space-y-2 px-4">
+                        <a href="{{ url('/#home') }}"
+                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Home</a>
+                        <a href="{{ url('/#categories') }}"
+                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Categories</a>
+                        <a href="{{ route('landing.produk') }}"
+                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Products</a>
+                        <a href="{{ url('/#about') }}"
+                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">About
+                            Us</a>
+                    </div>
+
+                    <div class="border-t border-zinc-200 mt-6 pt-6 px-4">
+                        @auth
+                            <div class="flex items-center gap-x-4 mb-4">
+                                <div
+                                    class="h-10 w-10 flex-none rounded-full bg-comfy-100 flex items-center justify-center text-comfy-800 font-bold">
+                                    {{ substr(Auth::user()->name, 0, 1) }}
+                                </div>
+                                <span
+                                    class="text-base font-semibold leading-7 text-zinc-900">{{ Auth::user()->name }}</span>
+                            </div>
+                            @if (Auth::user()->role === 'admin')
+                                <a href="{{ route('dashboard') }}"
+                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Dashboard</a>
+                            @endif
+                            <a href="{{ route('landing.profil') }}"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Profil</a>
+                            <a href="{{ route('landing.keranjang') }}"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Keranjang</a>
+                            <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                                @csrf
+                                <button type="submit"
+                                    class="-mx-3 block w-full text-left rounded-lg px-3 py-2 text-base font-semibold leading-7 text-red-600 hover:bg-red-50">Log
+                                    out</button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}"
+                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Log
+                                in</a>
+                            <a href="{{ route('register') }}"
+                                class="mt-2 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-zinc-900 hover:bg-zinc-50">Sign
+                                up</a>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </div>
