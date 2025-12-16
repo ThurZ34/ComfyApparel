@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TopupController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TopupadminController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,5 @@ Route::middleware(IsAdmin::class)->group(function () {
     Route::resource('produk', ProdukController::class)->except(['show']);
     Route::resource('kategori', KategoriController::class);
     Route::resource('pengguna', UserController::class);
+    Route::resource('topup-admin', TopupadminController::class);
 });

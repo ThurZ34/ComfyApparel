@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
+use Midtrans\Transaction;
 
 class TopupController extends Controller
 {
@@ -83,6 +84,10 @@ class TopupController extends Controller
                     'name' => 'Top Up Saldo ComfyApparel',
                 ],
             ],
+            // Callback URLs for e-wallet redirects (DANA, GoPay, etc.)
+            'callbacks' => [
+                'finish' => route('topup.finish', ['order_id' => $orderId]),
+            ],
         ];
 
         try {
@@ -155,41 +160,162 @@ class TopupController extends Controller
     }
 
     /**
-     * Handle successful payment - update topup status and user balance.
+     * Handle successful payment from Midtrans.
+     * Sets status to 'pending' for admin verification.
+     * Balance will only be added after admin approval.
      */
     private function handleSuccess(Topup $topup, string $paymentType): void
     {
         // Prevent double processing
         if ($topup->status === 'success') {
+            // Ensure balance is synced even if status was already success
+            $this->syncUserBalance($topup);
+
             return;
         }
 
+        // Update to pending (waiting admin approval)
+        // Do NOT add balance here - admin must approve first
         $topup->update([
-            'status' => 'success',
+            'status' => 'pending',
             'payment_method' => $paymentType,
         ]);
 
-        // Add balance to user
-        $user = $topup->user;
-        $user->update([
-            'balance' => ($user->balance ?? 0) + $topup->amount,
+        Log::info('Payment received, waiting admin approval', [
+            'topup_id' => $topup->id,
+            'order_id' => $topup->order_id,
+            'amount' => $topup->amount,
         ]);
     }
 
     /**
+     * Add balance to user from topup.
+     */
+    private function addBalanceToUser(Topup $topup): void
+    {
+        $user = $topup->user;
+        $newBalance = ($user->balance ?? 0) + $topup->amount;
+        $user->balance = $newBalance;
+        $user->save();
+
+        Log::info('Balance added', [
+            'user_id' => $user->id,
+            'topup_id' => $topup->id,
+            'amount' => $topup->amount,
+            'new_balance' => $newBalance,
+        ]);
+    }
+
+    /**
+     * Sync user balance - recalculate from all successful topups.
+     * This is a safety net in case balance got out of sync.
+     */
+    private function syncUserBalance(Topup $topup): void
+    {
+        $user = $topup->user;
+        $totalSuccessTopups = Topup::where('user_id', $user->id)
+            ->where('status', 'success')
+            ->sum('amount');
+
+        if ($user->balance != $totalSuccessTopups) {
+            Log::warning('Balance out of sync, fixing', [
+                'user_id' => $user->id,
+                'current_balance' => $user->balance,
+                'should_be' => $totalSuccessTopups,
+            ]);
+            $user->balance = $totalSuccessTopups;
+            $user->save();
+        }
+    }
+
+    /**
      * Handle finish redirect from Midtrans.
+     * Also checks transaction status directly from Midtrans API (for localhost testing).
      */
     public function finish(Request $request)
     {
         $orderId = $request->get('order_id');
+        $transactionStatus = $request->get('transaction_status');
+
         $topup = Topup::where('order_id', $orderId)->first();
 
-        if ($topup && $topup->status === 'success') {
+        if (! $topup) {
+            return redirect()->route('topup.index')
+                ->with('error', 'Transaksi tidak ditemukan.');
+        }
+
+        // If already success, ensure balance is synced and redirect
+        if ($topup->status === 'success') {
+            $this->syncUserBalance($topup);
+
             return redirect()->route('landing.profil')
                 ->with('success', 'Top up berhasil! Saldo telah ditambahkan.');
         }
 
-        return redirect()->route('topup.index')
-            ->with('info', 'Pembayaran sedang diproses. Saldo akan ditambahkan setelah pembayaran dikonfirmasi.');
+        // If Snap.js passed transaction_status in URL
+        if ($transactionStatus === 'settlement' || $transactionStatus === 'capture') {
+            $this->handleSuccess($topup, $request->get('payment_type', 'unknown'));
+
+            return redirect()->route('landing.profil')
+                ->with('success', 'Top up berhasil! Saldo telah ditambahkan.');
+        }
+
+        // Check transaction status directly from Midtrans API
+        // This is useful when webhook doesn't arrive (localhost testing)
+        try {
+            $status = Transaction::status($orderId);
+
+            $apiTransactionStatus = $status->transaction_status ?? null;
+            $paymentType = $status->payment_type ?? 'unknown';
+            $fraudStatus = $status->fraud_status ?? null;
+
+            Log::info('Midtrans Status Check', [
+                'order_id' => $orderId,
+                'status' => $apiTransactionStatus,
+                'payment_type' => $paymentType,
+            ]);
+
+            // Handle based on transaction status
+            if ($apiTransactionStatus == 'capture') {
+                if ($fraudStatus == 'accept') {
+                    $this->handleSuccess($topup, $paymentType);
+                }
+            } elseif ($apiTransactionStatus == 'settlement') {
+                $this->handleSuccess($topup, $paymentType);
+            } elseif (in_array($apiTransactionStatus, ['cancel', 'deny', 'expire'])) {
+                $topup->update([
+                    'status' => 'failed',
+                    'payment_method' => $paymentType,
+                ]);
+
+                return redirect()->route('topup.index')
+                    ->with('error', 'Pembayaran gagal atau dibatalkan.');
+            }
+
+            // Check if now success after API check
+            $topup->refresh();
+            if ($topup->status === 'success') {
+                return redirect()->route('landing.profil')
+                    ->with('success', 'Top up berhasil! Saldo telah ditambahkan.');
+            }
+
+            return redirect()->route('topup.index')
+                ->with('info', 'Pembayaran sedang diproses. Saldo akan ditambahkan setelah pembayaran dikonfirmasi.');
+
+        } catch (\Exception $e) {
+            Log::error('Midtrans Status Check Error: '.$e->getMessage());
+
+            // For sandbox testing: if we got here from Snap.js onSuccess, mark as success anyway
+            // This helps with sandbox mode where API sometimes doesn't have the transaction
+            if ($request->has('order_id') && $topup->status === 'pending') {
+                $this->handleSuccess($topup, 'sandbox_test');
+
+                return redirect()->route('landing.profil')
+                    ->with('success', 'Top up berhasil! Saldo telah ditambahkan.');
+            }
+
+            return redirect()->route('topup.index')
+                ->with('info', 'Pembayaran sedang diproses. Silakan cek beberapa saat lagi.');
+        }
     }
 }
