@@ -62,22 +62,18 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="flex flex-1 flex-col justify-between p-6">
+                        <a href="{{ route('landing.produk', ['kategori' => $kategori->id]) }}"
+                            class="flex flex-1 flex-col justify-between p-6">
                             <div class="flex-1">
                                 <h3 class="text-xl font-bold text-zinc-900 group-hover:text-comfy-800 transition-colors">
-                                    <a href="#">
-                                        <span aria-hidden="true" class="absolute inset-0"></span>
-                                        {{ $kategori->kategori }}
-                                    </a>
+                                    {{ $kategori->kategori }}
                                 </h3>
                                 <p class="mt-3 text-base text-zinc-500 line-clamp-2 leading-relaxed">
                                     {{ $kategori->deskripsi }}
                                 </p>
                             </div>
                             <div class="mt-6 flex items-center gap-2 text-sm font-medium text-comfy-800">
-                                <span>
-                                    <a href="{{ route('produk.index', $kategori->id) }}">Explore Collection</a>
-                                </span>
+                                <span>Explore Collection</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor"
                                     class="size-4 transform transition-transform group-hover:translate-x-1">
@@ -85,7 +81,7 @@
                                         d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                 </svg>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>
