@@ -140,10 +140,10 @@
                     </dl>
 
                     <div class="mt-6">
-                        <button type="submit"
-                            class="w-full rounded-full border border-transparent bg-comfy-800 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-comfy-900 focus:outline-none focus:ring-2 focus:ring-comfy-500 focus:ring-offset-2 focus:ring-offset-gray-50 transition-all shadow-comfy-800/20 hover:shadow-lg">
+                        <a href="{{ route('transaksi.create') }}"
+                            class="block w-full text-center rounded-full border border-transparent bg-comfy-800 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-comfy-900 focus:outline-none focus:ring-2 focus:ring-comfy-500 focus:ring-offset-2 focus:ring-offset-gray-50 transition-all shadow-comfy-800/20 hover:shadow-lg">
                             Checkout
-                        </button>
+                        </a>
                     </div>
 
                     <div class="mt-4 text-center">
