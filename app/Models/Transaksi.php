@@ -18,6 +18,8 @@ class Transaksi extends Model
         'nama_penerima',
         'no_telp_penerima',
         'status',
+        'no_resi',
+        'kurir',
         'catatan',
         'admin_notes',
         'paid_at',
@@ -49,6 +51,15 @@ class Transaksi extends Model
     }
 
     /**
+     * Relasi ke TransaksiLog (Riwayat perubahan status)
+     * SATU transaksi BANYAK log
+     */
+    public function logs(): HasMany
+    {
+        return $this->hasMany(TransaksiLog::class);
+    }
+
+    /**
      * Boot method untuk generate kode transaksi otomatis
      */
     protected static function boot()
@@ -57,7 +68,7 @@ class Transaksi extends Model
 
         static::creating(function ($transaksi) {
             if (empty($transaksi->kode_transaksi)) {
-                $transaksi->kode_transaksi = 'TRX-'.now()->format('Ymd').'-'.str_pad(static::whereDate('created_at', today())->count() + 1, 4, '0', STR_PAD_LEFT);
+                $transaksi->kode_transaksi = 'TRX-' . now()->format('Ymd') . '-' . str_pad(static::whereDate('created_at', today())->count() + 1, 4, '0', STR_PAD_LEFT);
             }
         });
     }

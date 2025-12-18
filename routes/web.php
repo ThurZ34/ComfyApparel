@@ -3,9 +3,10 @@
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\TopupController;
 use App\Http\Controllers\TopupadminController;
+use App\Http\Controllers\TopupController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TransaksilogController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,5 @@ Route::middleware(IsAdmin::class)->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('pengguna', UserController::class);
     Route::resource('topup-admin', TopupadminController::class);
+    Route::resource('transaksi_log', TransaksilogController::class);
 });
