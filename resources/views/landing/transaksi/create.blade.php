@@ -11,6 +11,67 @@
             <p class="mt-2 text-lg text-zinc-600">Lengkapi data pengiriman Anda</p>
         </div>
 
+        <!-- Flash Messages -->
+        @if (session('error'))
+            <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div
+                class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        <!-- Warning: Saldo Tidak Mencukupi -->
+        @if (Auth::user()->balance < $subtotal)
+            <div class="mb-6 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-4 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 shrink-0 mt-0.5"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-yellow-900">Saldo Anda Tidak Mencukupi!</h3>
+                        <p class="mt-1 text-sm text-yellow-700">
+                            Total belanja Anda adalah <strong>Rp {{ number_format($subtotal, 0, ',', '.') }}</strong>,
+                            tetapi saldo Anda hanya <strong>Rp
+                                {{ number_format(Auth::user()->balance, 0, ',', '.') }}</strong>.
+                        </p>
+                        <p class="mt-1 text-sm text-yellow-700">
+                            Kekurangan: <strong class="text-red-600">Rp
+                                {{ number_format($subtotal - Auth::user()->balance, 0, ',', '.') }}</strong>
+                        </p>
+                        <a href="{{ route('topup.index') }}"
+                            class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                                <path fill-rule="evenodd"
+                                    d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Top Up Saldo Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <form action="{{ route('transaksi.store') }}" method="POST" class="space-y-6">
             @csrf
 
@@ -27,7 +88,7 @@
                         </label>
                         <input type="text" name="nama_penerima" id="nama_penerima" required
                             value="{{ old('nama_penerima', Auth::user()->name) }}"
-                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm">
+                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 text-base p-4">
                     </div>
 
                     <!-- No Telepon -->
@@ -37,7 +98,7 @@
                         </label>
                         <input type="tel" name="no_telp_penerima" id="no_telp_penerima" required
                             value="{{ old('no_telp_penerima', Auth::user()->phone) }}"
-                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm">
+                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 text-base p-4">
                     </div>
 
                     <!-- Alamat -->
@@ -46,7 +107,7 @@
                             Alamat Lengkap
                         </label>
                         <textarea name="alamat_pengiriman" id="alamat_pengiriman" rows="3" required
-                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm">{{ old('alamat_pengiriman', Auth::user()->address) }}</textarea>
+                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 text-base p-4">{{ old('alamat_pengiriman', Auth::user()->address) }}</textarea>
                     </div>
 
                     <!-- Catatan -->
@@ -55,7 +116,7 @@
                             Catatan (Opsional)
                         </label>
                         <textarea name="catatan" id="catatan" rows="2"
-                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm"
+                            class="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-comfy-800 focus:ring-comfy-800 text-base p-4"
                             placeholder="Contoh: Kirim pagi hari">{{ old('catatan') }}</textarea>
                     </div>
                 </div>
@@ -140,10 +201,17 @@
                     class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-zinc-300 rounded-lg text-base font-medium text-zinc-700 bg-white hover:bg-zinc-50 transition-colors">
                     Kembali ke Keranjang
                 </a>
-                <button type="submit"
-                    class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-lg text-base font-medium text-white bg-comfy-800 hover:bg-comfy-900 shadow-sm transition-colors">
-                    Bayar Sekarang
-                </button>
+                @if (Auth::user()->balance >= $subtotal)
+                    <button type="submit"
+                        class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-lg text-base font-medium text-white bg-comfy-800 hover:bg-comfy-900 shadow-sm transition-colors">
+                        Bayar Sekarang
+                    </button>
+                @else
+                    <button type="button" disabled
+                        class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-lg text-base font-medium text-white bg-zinc-400 cursor-not-allowed">
+                        Saldo Tidak Mencukupi
+                    </button>
+                @endif
             </div>
         </form>
     </div>

@@ -110,6 +110,29 @@ class LandingController extends Controller
         return redirect()->back()->with('success', 'Barang anda sudah di masukkan ke keranjang, silahkan checkout');
     }
 
+    public function updateCart(Request $request, $id)
+    {
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            $quantity = $request->input('quantity');
+
+            // Ensure quantity is valid
+            if ($quantity > 0) {
+                $cart[$id]['quantity'] = $quantity;
+                session()->put('cart', $cart);
+                return redirect()->back()->with('success', 'Keranjang berhasil diperbarui!');
+            } else {
+                // Remove item if quantity is 0 or less
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+                return redirect()->back()->with('success', 'Produk dihapus dari keranjang.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
+    }
+
     public function removeFromCart($id)
     {
         $cart = session()->get('cart');

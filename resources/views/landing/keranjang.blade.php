@@ -52,17 +52,30 @@
 
                                         <div class="mt-4 sm:mt-0 sm:pr-9">
                                             <div class="flex items-center border border-zinc-300 rounded-md w-max">
-                                                <button type="button"
-                                                    class="px-2 py-1 text-zinc-600 hover:bg-zinc-50 rounded-l-md">
-                                                    -
-                                                </button>
-                                                <input type="text" name="quantity" value="{{ $item->quantity }}"
-                                                    class="w-8 border-0 p-0 text-center text-zinc-900 focus:ring-0 text-sm bg-transparent"
+                                                <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="quantity" value="{{ $item->quantity - 1 }}">
+                                                    <button type="submit"
+                                                        class="px-2 py-1 text-zinc-600 hover:bg-zinc-50 rounded-l-md border-r border-zinc-300">
+                                                        -
+                                                    </button>
+                                                </form>
+
+                                                <input type="text" value="{{ $item->quantity }}"
+                                                    class="w-10 border-0 p-0 text-center text-zinc-900 focus:ring-0 text-sm bg-transparent"
                                                     readonly>
-                                                <button type="button"
-                                                    class="px-2 py-1 text-zinc-600 hover:bg-zinc-50 rounded-r-md">
-                                                    +
-                                                </button>
+
+                                                <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="quantity"
+                                                        value="{{ $item->quantity + 1 }}">
+                                                    <button type="submit"
+                                                        class="px-2 py-1 text-zinc-600 hover:bg-zinc-50 rounded-r-md border-l border-zinc-300">
+                                                        +
+                                                    </button>
+                                                </form>
                                             </div>
 
                                             <form action="{{ route('cart.remove', $item->id) }}" method="POST"
