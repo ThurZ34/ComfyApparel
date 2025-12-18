@@ -7,6 +7,8 @@ use App\Http\Controllers\TopupadminController;
 use App\Http\Controllers\TopupController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksilogController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -35,13 +37,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(IsAdmin::class)->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('produk', ProdukController::class)->except(['show']);
     Route::resource('kategori', KategoriController::class);
     Route::resource('pengguna', UserController::class);
     Route::resource('topup-admin', TopupadminController::class);
     Route::resource('transaksi_log', TransaksilogController::class);
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 });

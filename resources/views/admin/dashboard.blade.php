@@ -7,8 +7,8 @@
 @section('content')
     <div class="space-y-6">
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1: Comfy Theme (Primary) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1: Total Revenue -->
             <div
                 class="relative overflow-hidden bg-comfy-800 text-white p-6 rounded-2xl shadow-xl transform transition duration-300 hover:-translate-y-1 hover:shadow-2xl group">
                 <div
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="flex items-center justify-between mb-4 relative z-10">
-                    <h3 class="text-comfy-200 text-xs font-semibold uppercase tracking-wider">Total Revenue</h3>
+                    <h3 class="text-comfy-200 text-xs font-semibold uppercase tracking-wider">Total Pendapatan</h3>
                     <span class="p-2 bg-white/10 border border-white/10 rounded-lg text-comfy-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -25,25 +25,34 @@
                         </svg>
                     </span>
                 </div>
-                <p class="text-4xl font-bold tracking-tight mb-1 relative z-10">$45,231.89</p>
+                <p class="text-3xl font-bold tracking-tight mb-1 relative z-10">Rp
+                    {{ number_format($totalRevenue, 0, ',', '.') }}</p>
                 <div class="mt-4 flex items-center text-sm relative z-10">
                     <span class="text-comfy-200 bg-white/10 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-3">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                        </svg>
-                        20.1%
+                        @if ($revenueGrowth >= 0)
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                            </svg>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
+                            </svg>
+                        @endif
+                        {{ $revenueGrowth }}%
                     </span>
-                    <span class="text-comfy-200/70 ml-2">from last month</span>
+                    <span class="text-comfy-200/70 ml-2">dari bulan lalu</span>
                 </div>
             </div>
 
-            <!-- Card 2: White Theme -->
+            <!-- Card 2: Active Users -->
             <div
                 class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm hover:border-comfy-500/30 hover:shadow-md transition-all duration-300">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Active Users</h3>
+                    <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Total Pengguna</h3>
                     <span class="p-2 bg-comfy-50 rounded-lg text-comfy-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -52,7 +61,7 @@
                         </svg>
                     </span>
                 </div>
-                <p class="text-4xl font-bold text-zinc-900 tracking-tight">2,350</p>
+                <p class="text-3xl font-bold text-zinc-900 tracking-tight">{{ number_format($totalUsers) }}</p>
                 <div class="mt-4 flex items-center text-sm">
                     <span class="text-comfy-800 bg-comfy-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -60,17 +69,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                         </svg>
-                        180
+                        +{{ $newUsersThisMonth }}
                     </span>
-                    <span class="text-zinc-400 ml-2">new users joined</span>
+                    <span class="text-zinc-400 ml-2">bulan ini</span>
                 </div>
             </div>
 
-            <!-- Card 3: White Theme -->
+            <!-- Card 3: Total Orders -->
             <div
                 class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm hover:border-comfy-500/30 hover:shadow-md transition-all duration-300">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Total Orders</h3>
+                    <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Total Pesanan</h3>
                     <span class="p-2 bg-comfy-50 rounded-lg text-comfy-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -79,70 +88,172 @@
                         </svg>
                     </span>
                 </div>
-                <p class="text-4xl font-bold text-zinc-900 tracking-tight">12,234</p>
+                <p class="text-3xl font-bold text-zinc-900 tracking-tight">{{ number_format($totalOrders) }}</p>
                 <div class="mt-4 flex items-center text-sm">
                     <span class="text-comfy-800 bg-comfy-50 px-2 py-0.5 rounded flex items-center gap-1 font-medium">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-3">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                        </svg>
-                        12%
+                        @if ($ordersGrowth >= 0)
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                            </svg>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
+                            </svg>
+                        @endif
+                        {{ $ordersGrowth }}%
                     </span>
-                    <span class="text-zinc-400 ml-2">growth rate</span>
+                    <span class="text-zinc-400 ml-2">dari bulan lalu</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Pending Items -->
+            <div
+                class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm hover:border-comfy-500/30 hover:shadow-md transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Perlu Diproses</h3>
+                    <span class="p-2 bg-orange-50 rounded-lg text-orange-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </span>
+                </div>
+                <p class="text-3xl font-bold text-zinc-900 tracking-tight">{{ $pendingOrders + $pendingTopups }}</p>
+                <div class="mt-4 flex items-center gap-3 text-sm">
+                    <span class="text-orange-600 bg-orange-50 px-2 py-0.5 rounded font-medium">{{ $pendingOrders }}
+                        Order</span>
+                    <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded font-medium">{{ $pendingTopups }}
+                        Topup</span>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Activity Section -->
-        <div class="bg-white border border-zinc-200 rounded-2xl shadow-sm">
-            <div class="p-6 border-b border-zinc-100 flex items-center justify-between">
-                <h2 class="text-lg font-bold text-zinc-900">Recent Transactions</h2>
-                <button class="text-sm font-medium text-zinc-500 hover:text-black transition-colors">View All</button>
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Recent Transactions -->
+            <div class="lg:col-span-2 bg-white border border-zinc-200 rounded-2xl shadow-sm">
+                <div class="p-6 border-b border-zinc-100 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-zinc-900">Transaksi Terbaru</h2>
+                    <a href="{{ route('transaksi_log.index') }}"
+                        class="text-sm font-medium text-comfy-800 hover:text-comfy-900">Lihat Semua</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-comfy-50/50 text-zinc-500 text-xs uppercase tracking-wider">
+                                <th class="px-6 py-3 font-semibold">Kode</th>
+                                <th class="px-6 py-3 font-semibold">Pelanggan</th>
+                                <th class="px-6 py-3 font-semibold">Tanggal</th>
+                                <th class="px-6 py-3 font-semibold">Total</th>
+                                <th class="px-6 py-3 font-semibold text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-100">
+                            @forelse($recentTransactions as $trx)
+                                <tr class="group hover:bg-zinc-50 transition-colors">
+                                    <td class="px-6 py-4 text-zinc-900 font-medium whitespace-nowrap">
+                                        {{ $trx->kode_transaksi }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-gradient-to-br from-comfy-50 to-comfy-200 border border-comfy-200 flex items-center justify-center text-xs font-bold text-comfy-800">
+                                                {{ substr($trx->user->name ?? 'U', 0, 1) }}
+                                            </div>
+                                            <div class="text-sm font-medium text-zinc-700">{{ $trx->user->name ?? '-' }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-zinc-500 text-sm whitespace-nowrap">
+                                        {{ $trx->created_at->format('d M Y') }}
+                                    </td>
+                                    <td class="px-6 py-4 text-zinc-900 font-semibold whitespace-nowrap">
+                                        Rp {{ number_format($trx->total_harga, 0, ',', '.') }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right whitespace-nowrap">
+                                        @php
+                                            $statusClass = match ($trx->status) {
+                                                'completed' => 'bg-green-100 text-green-800',
+                                                'shipped' => 'bg-indigo-100 text-indigo-800',
+                                                'processing' => 'bg-purple-100 text-purple-800',
+                                                'paid' => 'bg-blue-100 text-blue-800',
+                                                'cancelled' => 'bg-red-100 text-red-800',
+                                                default => 'bg-yellow-100 text-yellow-800',
+                                            };
+                                        @endphp
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $statusClass }}">
+                                            {{ ucfirst($trx->status) }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-8 text-center text-zinc-500">Belum ada transaksi
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-comfy-50/50 text-zinc-500 text-xs uppercase tracking-wider">
-                            <th class="px-6 py-3 font-semibold">Transaction ID</th>
-                            <th class="px-6 py-3 font-semibold">Customer</th>
-                            <th class="px-6 py-3 font-semibold">Date</th>
-                            <th class="px-6 py-3 font-semibold">Amount</th>
-                            <th class="px-6 py-3 font-semibold text-right">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-zinc-100">
-                        @foreach (range(1, 5) as $i)
-                            <tr class="group hover:bg-zinc-50 transition-colors">
-                                <td class="px-6 py-4 text-zinc-900 font-medium whitespace-nowrap">
-                                    #TRX-{{ 7820 + $i }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-linear-to-br from-comfy-50 to-comfy-200 border border-comfy-200 flex items-center justify-center text-xs font-bold text-comfy-800">
-                                            {{ substr('Customer Two Three', $i, 1) }}
-                                        </div>
-                                        <div class="text-sm font-medium text-zinc-700">Customer {{ $i }}</div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-zinc-500 text-sm whitespace-nowrap">
-                                    {{ now()->subDays($i)->format('M d, Y') }}
-                                </td>
-                                <td class="px-6 py-4 text-zinc-900 font-semibold whitespace-nowrap">
-                                    $1,{{ rand(100, 999) }}.00
-                                </td>
-                                <td class="px-6 py-4 text-right whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $i % 2 == 0 ? 'bg-comfy-800 text-white' : 'bg-zinc-100 text-zinc-600 border border-zinc-200' }}">
-                                        {{ $i % 2 == 0 ? 'Completed' : 'Pending' }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <!-- Top Products -->
+            <div class="bg-white border border-zinc-200 rounded-2xl shadow-sm">
+                <div class="p-6 border-b border-zinc-100 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-zinc-900">Produk Terlaris</h2>
+                    <a href="{{ route('laporan.index') }}"
+                        class="text-sm font-medium text-comfy-800 hover:text-comfy-900">Lihat Laporan</a>
+                </div>
+
+                <div class="p-4">
+                    @forelse($topProducts as $index => $product)
+                        <div class="flex items-center gap-3 py-3 {{ !$loop->last ? 'border-b border-zinc-100' : '' }}">
+                            <span
+                                class="shrink-0 w-6 h-6 flex items-center justify-center text-xs font-bold rounded-full {{ $index < 3 ? 'bg-comfy-800 text-white' : 'bg-zinc-200 text-zinc-600' }}">
+                                {{ $index + 1 }}
+                            </span>
+                            <div class="shrink-0 w-10 h-10 bg-zinc-100 rounded-lg overflow-hidden">
+                                @if ($product->gambar)
+                                    <img src="{{ asset('storage/' . $product->gambar) }}" alt="{{ $product->nama }}"
+                                        class="w-full h-full object-cover">
+                                @endif
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-zinc-900 truncate">{{ $product->nama }}</p>
+                                <p class="text-xs text-zinc-500">{{ $product->total_sold }} terjual</p>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-center text-zinc-500 py-8">Belum ada data</p>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-zinc-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-zinc-900">{{ $totalProducts }}</p>
+                <p class="text-sm text-zinc-500">Total Produk</p>
+            </div>
+            <div class="bg-zinc-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-zinc-900">{{ $ordersThisMonth }}</p>
+                <p class="text-sm text-zinc-500">Order Bulan Ini</p>
+            </div>
+            <div class="bg-zinc-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-zinc-900">Rp {{ number_format($revenueThisMonth, 0, ',', '.') }}</p>
+                <p class="text-sm text-zinc-500">Pendapatan Bulan Ini</p>
+            </div>
+            <div class="bg-zinc-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-zinc-900">{{ $newUsersThisMonth }}</p>
+                <p class="text-sm text-zinc-500">User Baru Bulan Ini</p>
             </div>
         </div>
     </div>
