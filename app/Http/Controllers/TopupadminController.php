@@ -45,6 +45,7 @@ class TopupadminController extends Controller
 
         // Update status
         $topup->status = $newStatus;
+        $topup->approved_at = now();
         $topup->save();
 
         // If admin approves (change to success), add balance to user

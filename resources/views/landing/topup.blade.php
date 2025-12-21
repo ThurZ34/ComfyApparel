@@ -143,5 +143,74 @@
                 <p class="mt-2 text-sm text-zinc-500">Dukung pembayaran via transfer bank, e-wallet, dan QRIS.</p>
             </div>
         </div>
+
+        {{-- Topup History --}}
+        <div class="mt-16">
+            <h2 class="text-2xl font-serif font-bold text-comfy-800 mb-6">Riwayat Top Up</h2>
+            <div class="bg-white rounded-xl shadow-sm border border-zinc-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-zinc-600">
+                        <thead class="bg-zinc-50 border-b border-zinc-100 text-xs uppercase font-semibold text-zinc-500">
+                            <tr>
+                                <th class="px-6 py-4">Tanggal Request</th>
+                                <th class="px-6 py-4">Order ID</th>
+                                <th class="px-6 py-4">Nominal</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4">Tanggal Persetujuan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-100">
+                            @forelse ($history as $item)
+                                <tr class="hover:bg-zinc-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ $item->created_at->format('d M Y H:i') }}
+                                    </td>
+                                    <td class="px-6 py-4 font-mono text-xs">
+                                        {{ $item->order_id }}
+                                    </td>
+                                    <td class="px-6 py-4 font-medium text-zinc-900">
+                                        Rp {{ number_format($item->amount, 0, ',', '.') }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($item->status === 'success')
+                                            <span
+                                                class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                                <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                                                Berhasil
+                                            </span>
+                                        @elseif ($item->status === 'pending')
+                                            <span
+                                                class="inline-flex items-center gap-1 rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                                                <span class="h-1.5 w-1.5 rounded-full bg-yellow-600"></span>
+                                                Pending
+                                            </span>
+                                        @elseif ($item->status === 'failed')
+                                            <span
+                                                class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                                <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                                Gagal
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 text-zinc-500">
+                                        @if ($item->approved_at)
+                                            {{ \Carbon\Carbon::parse($item->approved_at)->format('d M Y H:i') }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-8 text-center text-zinc-500 italic">
+                                        Belum ada riwayat top up.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -33,7 +33,11 @@ class TopupController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        return view('landing.topup');
+        $history = Topup::where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('landing.topup', compact('history'));
     }
 
     /**

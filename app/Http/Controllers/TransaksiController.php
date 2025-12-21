@@ -85,8 +85,14 @@ class TransaksiController extends Controller
             $itemsData = [];
 
             foreach ($cart as $produkId => $details) {
-                $produk = Produk::findOrFail($produkId);
+                $produk = Produk::lockForUpdate()->findOrFail($produkId);
                 $quantity = $details['quantity'];
+
+                // Check stock availability
+                if ($produk->stok < $quantity) {
+                    throw new \Exception("Stok produk {$produk->nama} tidak mencukupi (Tersedia: {$produk->stok}).");
+                }
+
                 $hargaSatuan = $produk->harga;
                 $itemSubtotal = $hargaSatuan * $quantity;
 
@@ -123,7 +129,7 @@ class TransaksiController extends Controller
                 'status' => 'pending',
             ]);
 
-            // 5. Save item details
+            // 5. Save item details and update stock
             foreach ($itemsData as $itemData) {
                 TransaksiDetail::create([
                     'transaksi_id' => $transaksi->id,
@@ -133,6 +139,10 @@ class TransaksiController extends Controller
                     'quantity' => $itemData['quantity'],
                     'subtotal' => $itemData['subtotal'],
                 ]);
+
+                // Decrement stock
+                $produk = Produk::find($itemData['produk_id']);
+                $produk->decrement('stok', $itemData['quantity']);
             }
 
             // 6. Deduct user balance
@@ -203,6 +213,14 @@ class TransaksiController extends Controller
                 $user = $transaksi->user;
                 $user->balance += $transaksi->total_harga;
                 $user->save();
+            }
+
+            // Kembalikan stok produk
+            foreach ($transaksi->details as $detail) {
+                $produk = Produk::find($detail->produk_id);
+                if ($produk) {
+                    $produk->increment('stok', $detail->quantity);
+                }
             }
 
             // Update status jadi cancelled

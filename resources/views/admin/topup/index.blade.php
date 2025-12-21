@@ -32,10 +32,9 @@
                         </svg>
                     </div>
                     <form action="{{ route('topup-admin.index') }}" method="GET">
-                    <input type="text"
-                    name="query"
-                        class="block w-full pl-10 pr-3 py-2 border border-zinc-200 rounded-lg leading-5 bg-white placeholder-zinc-400 focus:outline-none focus:placeholder-zinc-300 focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm transition duration-150 ease-in-out"
-                        placeholder="Cari transaksi...">
+                        <input type="text" name="query"
+                            class="block w-full pl-10 pr-3 py-2 border border-zinc-200 rounded-lg leading-5 bg-white placeholder-zinc-400 focus:outline-none focus:placeholder-zinc-300 focus:border-comfy-800 focus:ring-comfy-800 sm:text-sm transition duration-150 ease-in-out"
+                            placeholder="Cari transaksi...">
                     </form>
                 </div>
             </div>
@@ -66,6 +65,10 @@
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
                                         Date
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                                        Approved At
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-center text-xs font-medium text-zinc-500 uppercase tracking-wider">
@@ -107,6 +110,9 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
                                             {{ $topup->created_at->format('d M Y H:i') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
+                                            {{ $topup->approved_at ? $topup->approved_at->format('d M Y H:i') : '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             @php

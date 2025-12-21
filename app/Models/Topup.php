@@ -13,8 +13,14 @@ class Topup extends Model
         'order_id',
         'amount',
         'status',
+        'approved_at',
         'payment_method',
         'snap_token',
+    ];
+
+    protected $casts = [
+        'approved_at' => 'datetime',
+        'amount' => 'integer',
     ];
 
     public function user()
