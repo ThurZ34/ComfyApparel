@@ -6,13 +6,13 @@
 
 @section('content')
     <div x-data="{
-        createModalOpen: false,
-        editModalOpen: false,
+        createModalOpen: {{ $errors->storeKategori->any() ? 'true' : 'false' }},
+        editModalOpen: {{ $errors->updateKategori->any() ? 'true' : 'false' }},
         deleteModalOpen: false,
         currentKategori: {
-            id: null,
-            kategori: '',
-            deskripsi: ''
+            id: '{{ old('id') }}', // Only relevant if updateKategori fails
+            kategori: '{{ old('kategori') && $errors->updateKategori->any() ? old('kategori') : '' }}',
+            deskripsi: '{{ old('deskripsi') && $errors->updateKategori->any() ? old('deskripsi') : '' }}'
         },
         deleteUrl: '',
         resetForm() {
@@ -166,7 +166,8 @@
                                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                     </svg>
                                                 </button>
-                                                <button @click="confirmDelete('{{ route('kategori.destroy', $item->id) }}')"
+                                                <button
+                                                    @click="confirmDelete('{{ route('kategori.destroy', $item->id) }}')"
                                                     class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors"
                                                     title="Hapus">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -255,10 +256,10 @@
                                     <label for="kategori" class="block text-sm font-medium leading-6 text-zinc-900">Nama
                                         Kategori</label>
                                     <div class="mt-2">
-                                        <input type="text" name="kategori" id="kategori" required <input
-                                            type="text" name="kategori" id="kategori" required
-                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
-                                        @error('kategori')
+                                        <input type="text" name="kategori" id="kategori" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
+                                            value="{{ old('kategori') }}">
+                                        @error('kategori', 'storeKategori')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -269,10 +270,9 @@
                                     <label for="deskripsi"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
-                                        <textarea id="deskripsi" name="deskripsi" rows="3" required <textarea id="deskripsi" name="deskripsi"
-                                            rows="3" required
-                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
-                                        @error('deskripsi')
+                                        <textarea id="deskripsi" name="deskripsi" rows="3" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">{{ old('deskripsi') }}</textarea>
+                                        @error('deskripsi', 'storeKategori')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -322,6 +322,7 @@
                         </div>
 
                         <form x-bind:action="'/kategori/' + currentKategori.id" method="POST">
+                            <input type="hidden" name="id" x-model="currentKategori.id">
                             @csrf
                             @method('PUT')
                             <div class="px-4 py-5 sm:p-6 space-y-4">
@@ -333,7 +334,7 @@
                                         <input type="text" name="kategori" id="edit_kategori"
                                             x-model="currentKategori.kategori" required
                                             class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
-                                        @error('kategori')
+                                        @error('kategori', 'updateKategori')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -344,8 +345,9 @@
                                     <label for="edit_deskripsi"
                                         class="block text-sm font-medium leading-6 text-zinc-900">Deskripsi</label>
                                     <div class="mt-2">
-                                        class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
-                                        @error('deskripsi')
+                                        <textarea id="edit_deskripsi" name="deskripsi" rows="3" x-model="currentKategori.deskripsi" required
+                                            class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"></textarea>
+                                        @error('deskripsi', 'updateKategori')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>

@@ -30,7 +30,7 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        request()->validateWithBag('storeKategori', [
             'kategori' => 'required|unique:kategoris,kategori',
             'deskripsi' => 'required',
         ]);
@@ -58,8 +58,8 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
-        request()->validate([
-            'kategori' => 'required|unique:kategoris,kategori,'.$kategori->id,
+        request()->validateWithBag('updateKategori', [
+            'kategori' => 'required|unique:kategoris,kategori,' . $kategori->id,
             'deskripsi' => 'required',
         ]);
 
