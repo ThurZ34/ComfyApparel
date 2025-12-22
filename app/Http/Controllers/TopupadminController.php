@@ -43,6 +43,12 @@ class TopupadminController extends Controller
         $oldStatus = $topup->status;
         $newStatus = $request->status;
 
+        // Prevent modification if already processed
+        if ($oldStatus !== 'pending') {
+            return redirect()->route('topup-admin.index')
+                ->with('error', 'Top up yang sudah diproses (Success/Failed) tidak dapat diubah lagi.');
+        }
+
         // Update status
         $topup->status = $newStatus;
         $topup->approved_at = now();

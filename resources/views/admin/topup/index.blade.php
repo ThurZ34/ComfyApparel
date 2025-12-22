@@ -39,6 +39,43 @@
                 </div>
             </div>
 
+            <!-- Alerts -->
+            @if (session('success'))
+                <div class="rounded-md bg-green-50 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="rounded-md bg-red-50 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-red-800">{{ session('error') }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Table Content -->
             <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
                 @if ($topups->count() > 0)
@@ -170,8 +207,8 @@
         </div>
 
         <!-- Edit Modal (Status Update) -->
-        <div x-show="editModalOpen" class="relative z-50 pointer-events-none" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true" x-cloak>
+        <div x-show="editModalOpen" class="relative z-50 pointer-events-none" aria-labelledby="modal-title"
+            role="dialog" aria-modal="true" x-cloak>
             <div x-show="editModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
