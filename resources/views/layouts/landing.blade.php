@@ -1,3 +1,6 @@
+@php
+    $storeSetting = \App\Models\StoreSetting::getSetting();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
@@ -6,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'ComfyApparel - Comfort Meets Style')</title>
+    <title>@yield('title', ($storeSetting->store_name ?? 'ComfyApparel') . ' - Comfort Meets Style')</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,17 +41,22 @@
             <div class="flex justify-between items-center">
                 <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 group">
-                    <div
-                        class="bg-comfy-800 text-white p-1.5 rounded-lg shadow-sm shadow-comfy-800/20 transition-transform group-hover:scale-105">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                        </svg>
-                    </div>
+                    @if ($storeSetting->logo)
+                        <img src="{{ Storage::url($storeSetting->logo) }}" alt="{{ $storeSetting->store_name }}"
+                            class="h-8 w-auto rounded-lg shadow-sm transition-transform group-hover:scale-105">
+                    @else
+                        <div
+                            class="bg-comfy-800 text-white p-1.5 rounded-lg shadow-sm shadow-comfy-800/20 transition-transform group-hover:scale-105">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                        </div>
+                    @endif
                     <span class="font-bold text-xl tracking-tight transition-colors"
                         :class="scrolled ? 'text-comfy-800' : 'text-comfy-800 @yield('nav-text-class-lg')'">
-                        ComfyApparel
+                        {{ $storeSetting->store_name ?? 'ComfyApparel' }}
                     </span>
                 </a>
 
@@ -276,14 +284,20 @@
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="space-y-8">
                     <div class="flex items-center gap-2">
-                        <div class="bg-white text-comfy-800 p-1.5 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                            </svg>
-                        </div>
-                        <span class="font-bold text-xl tracking-tight">ComfyApparel</span>
+                        @if ($storeSetting->logo)
+                            <img src="{{ Storage::url($storeSetting->logo) }}" alt="{{ $storeSetting->store_name }}"
+                                class="h-8 w-auto rounded-lg bg-white p-1">
+                        @else
+                            <div class="bg-white text-comfy-800 p-1.5 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                </svg>
+                            </div>
+                        @endif
+                        <span
+                            class="font-bold text-xl tracking-tight">{{ $storeSetting->store_name ?? 'ComfyApparel' }}</span>
                     </div>
                     <p class="text-sm leading-6 text-comfy-200">
                         Making the world a more comfortable place, one stitch at a time.

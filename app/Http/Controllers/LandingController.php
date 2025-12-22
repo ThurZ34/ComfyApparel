@@ -65,7 +65,17 @@ class LandingController extends Controller
 
     public function profil()
     {
-        return view('landing.profil');
+        $transactions = \App\Models\Transaksi::where('user_id', auth()->id())
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $topups = \App\Models\Topup::where('user_id', auth()->id())
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('landing.profil', compact('transactions', 'topups'));
     }
 
     public function keranjang()
@@ -121,11 +131,13 @@ class LandingController extends Controller
             if ($quantity > 0) {
                 $cart[$id]['quantity'] = $quantity;
                 session()->put('cart', $cart);
+
                 return redirect()->back()->with('success', 'Keranjang berhasil diperbarui!');
             } else {
                 // Remove item if quantity is 0 or less
                 unset($cart[$id]);
                 session()->put('cart', $cart);
+
                 return redirect()->back()->with('success', 'Produk dihapus dari keranjang.');
             }
         }

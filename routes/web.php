@@ -1,14 +1,15 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\StoreSettingController;
 use App\Http\Controllers\TopupadminController;
 use App\Http\Controllers\TopupController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksilogController;
-use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -45,4 +46,8 @@ Route::middleware(IsAdmin::class)->group(function () {
     Route::resource('topup-admin', TopupadminController::class);
     Route::resource('transaksi_log', TransaksilogController::class);
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+
+    // Store Settings
+    Route::get('/pengaturan', [StoreSettingController::class, 'index'])->name('pengaturan.index');
+    Route::put('/pengaturan', [StoreSettingController::class, 'update'])->name('pengaturan.update');
 });
