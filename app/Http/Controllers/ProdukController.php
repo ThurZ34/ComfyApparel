@@ -131,6 +131,14 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
+        if ($produk->transaksiDetails()->exists()) {
+            return redirect()->route('produk.index')
+                ->with('error', 'Produk tidak dapat dihapus karena sudah pernah dibeli. Silakan nonaktifkan (set stok 0) jika ingin menyembunyikannya.');
+        }
+        if ($produk->gambar) {
+            Storage::disk('public')->delete($produk->gambar);
+        }
+
         $produk->delete();
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus');
