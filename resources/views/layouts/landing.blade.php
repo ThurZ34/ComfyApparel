@@ -93,6 +93,17 @@
                                 class="ml-1 text-xs font-semibold text-comfy-600 hover:text-comfy-800 bg-comfy-100 hover:bg-comfy-200 px-2 py-0.5 rounded-full transition-colors">+</a>
                         </div>
 
+                        <!-- Cart Icon -->
+                        <a href="{{ route('landing.keranjang') }}" class="group relative transition-colors"
+                            :class="scrolled ? 'text-zinc-600 hover:text-comfy-800' :
+                                'text-zinc-800 hover:text-comfy-500 @yield('nav-text-class-lg') @yield('nav-hover-class-lg')'">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            </svg>
+                        </a>
+
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" @click.outside="open = false"
@@ -129,10 +140,10 @@
                                     class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 hover:rounded-full transition-colors">
                                     Profil
                                 </a>
-                                <a href="{{ route('landing.keranjang') }}"
+                                <a href="{{ route('transaksi.index') }}"
                                     class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 hover:rounded-full transition-colors">
-                                    Keranjang
-                                </a>
+                                    Riwayat Transaksi
+                                </a>    
                                 <div class="border-t border-zinc-100 my-1"></div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -163,8 +174,8 @@
                     @auth
                         <!-- Mobile Balance Display (Simple) -->
                         <div class="flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-100/50">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-4 text-comfy-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4 text-comfy-600">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V4.505c0-.986.993-1.638 1.902-1.383 2.181.61 5.397 2.457 7.078 6.942.338.904-.37 1.848-1.282 2.172l-1.07.382z" />
                             </svg>

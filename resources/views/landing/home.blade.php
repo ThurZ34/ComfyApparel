@@ -92,13 +92,14 @@
     <section id="products" class="py-24 bg-zinc-50">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-3xl font-serif font-bold tracking-tight text-comfy-800 sm:text-4xl">Latest Collection
+                <h2 class="text-3xl font-serif font-bold tracking-tight text-comfy-800 sm:text-4xl">5 Produk Unggulan
                 </h2>
-                <p class="mt-4 text-lg leading-8 text-zinc-600">Our newest arrivals, designed for the modern lifestyle.
+                <p class="mt-4 text-lg leading-8 text-zinc-600">Produk favorit yang paling banyak diminati oleh pelanggan
+                    setia kami.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-8">
                 @foreach ($produks as $produk)
                     <div class="group relative">
                         <div

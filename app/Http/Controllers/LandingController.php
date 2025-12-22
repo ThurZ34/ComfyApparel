@@ -13,7 +13,12 @@ class LandingController extends Controller
      */
     public function index()
     {
-        $produks = Produk::with('kategori')->latest()->take(8)->get();
+        $produks = Produk::with('kategori')
+            ->withSum('transaksiDetails', 'quantity')
+            ->orderByDesc('transaksi_details_sum_quantity')
+            ->latest()
+            ->take(5)
+            ->get();
         $kategoris = Kategori::addSelect(['gambar_terbaru' => Produk::select('gambar')
             ->whereColumn('kategori_id', 'kategoris.id')
             ->latest()
