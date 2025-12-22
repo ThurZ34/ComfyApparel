@@ -91,6 +91,45 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Prepare chart data: Monthly Revenue for the last 12 months
+        $monthlyRevenueData = Transaksi::where('status', 'completed')
+            ->select(
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('SUM(total_harga) as total')
+            )
+            ->where('created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        $revenueLabels = [];
+        $revenueData = [];
+
+        for ($i = 11; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $revenueLabels[] = $date->format('M Y');
+
+            $found = $monthlyRevenueData->first(function ($item) use ($date) {
+                return $item->year == $date->year && $item->month == $date->month;
+            });
+
+            $revenueData[] = $found ? $found->total : 0;
+        }
+
+        // Prepare chart data: Order Status Distribution
+        $orderStatusData = Transaksi::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+
+        $chartStatuses = ['pending', 'paid', 'processing', 'shipped', 'completed', 'cancelled'];
+        $statusCounts = [];
+        foreach ($chartStatuses as $status) {
+            $statusCounts[] = $orderStatusData[$status] ?? 0;
+        }
+
         return view('admin.dashboard', compact(
             'totalRevenue',
             'revenueThisMonth',
@@ -104,7 +143,11 @@ class DashboardController extends Controller
             'pendingOrders',
             'pendingTopups',
             'recentTransactions',
-            'topProducts'
+            'topProducts',
+            'revenueLabels',
+            'revenueData',
+            'chartStatuses',
+            'statusCounts'
         ));
     }
 }

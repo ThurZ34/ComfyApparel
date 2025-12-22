@@ -133,6 +133,38 @@
             </div>
         </div>
 
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Revenue Chart -->
+            <div class="lg:col-span-2 bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-zinc-900">Pendapatan Bulanan</h3>
+                        <p class="text-sm text-zinc-500">Overview pendapatan 12 bulan terakhir</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span
+                            class="flex items-center gap-1 text-xs font-medium text-comfy-600 bg-comfy-50 px-2 py-1 rounded-full">
+                            <span class="w-2 h-2 rounded-full bg-comfy-600"></span>
+                            Pendapatan
+                        </span>
+                    </div>
+                </div>
+                <div class="relative h-72 w-full">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Order Status Chart -->
+            <div class="bg-white border border-zinc-100 p-6 rounded-2xl shadow-sm">
+                <h3 class="text-lg font-bold text-zinc-900 mb-2">Status Pesanan</h3>
+                <p class="text-sm text-zinc-500 mb-6">Distribusi status semua pesanan</p>
+                <div class="relative h-64 w-full flex items-center justify-center">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
         <!-- Two Column Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Recent Transactions -->
@@ -163,7 +195,7 @@
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
                                             <div
-                                                class="w-8 h-8 rounded-full bg-gradient-to-br from-comfy-50 to-comfy-200 border border-comfy-200 flex items-center justify-center text-xs font-bold text-comfy-800">
+                                                class="w-8 h-8 rounded-full bg-linear-to-br from-comfy-50 to-comfy-200 border border-comfy-200 flex items-center justify-center text-xs font-bold text-comfy-800">
                                                 {{ substr($trx->user->name ?? 'U', 0, 1) }}
                                             </div>
                                             <div class="text-sm font-medium text-zinc-700">{{ $trx->user->name ?? '-' }}
@@ -238,23 +270,168 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-zinc-50 rounded-xl p-4 text-center">
-                <p class="text-2xl font-bold text-zinc-900">{{ $totalProducts }}</p>
-                <p class="text-sm text-zinc-500">Total Produk</p>
-            </div>
-            <div class="bg-zinc-50 rounded-xl p-4 text-center">
-                <p class="text-2xl font-bold text-zinc-900">{{ $ordersThisMonth }}</p>
-                <p class="text-sm text-zinc-500">Order Bulan Ini</p>
-            </div>
-            <div class="bg-zinc-50 rounded-xl p-4 text-center">
-                <p class="text-2xl font-bold text-zinc-900">Rp {{ number_format($revenueThisMonth, 0, ',', '.') }}</p>
-                <p class="text-sm text-zinc-500">Pendapatan Bulan Ini</p>
-            </div>
-            <div class="bg-zinc-50 rounded-xl p-4 text-center">
-                <p class="text-2xl font-bold text-zinc-900">{{ $newUsersThisMonth }}</p>
-                <p class="text-sm text-zinc-500">User Baru Bulan Ini</p>
+        <div class="bg-white border border-zinc-200 rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-zinc-900 mb-4">Statistik Ringkas</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-zinc-50 rounded-xl p-4 text-center hover:bg-zinc-100 transition-colors">
+                    <p class="text-2xl font-bold text-zinc-900">{{ $totalProducts }}</p>
+                    <p class="text-sm text-zinc-500">Total Produk</p>
+                </div>
+                <div class="bg-zinc-50 rounded-xl p-4 text-center hover:bg-zinc-100 transition-colors">
+                    <p class="text-2xl font-bold text-zinc-900">{{ $ordersThisMonth }}</p>
+                    <p class="text-sm text-zinc-500">Order Bulan Ini</p>
+                </div>
+                <div class="bg-zinc-50 rounded-xl p-4 text-center hover:bg-zinc-100 transition-colors">
+                    <p class="text-2xl font-bold text-zinc-900">Rp
+                        {{ number_format($revenueThisMonth, 0, ',', '.') }}</p>
+                    <p class="text-sm text-zinc-500">Pendapatan Bulan Ini</p>
+                </div>
+                <div class="bg-zinc-50 rounded-xl p-4 text-center hover:bg-zinc-100 transition-colors">
+                    <p class="text-2xl font-bold text-zinc-900">{{ $newUsersThisMonth }}</p>
+                    <p class="text-sm text-zinc-500">User Baru Bulan Ini</p>
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart Defaults
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#71717a';
+            Chart.defaults.borderColor = '#f4f4f5';
+
+            // Revenue Chart
+            const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctxRevenue, {
+                type: 'line',
+                data: {
+                    labels: {!! json_encode($revenueLabels) !!},
+                    datasets: [{
+                        label: 'Pendapatan (Rp)',
+                        data: {!! json_encode($revenueData) !!},
+                        backgroundColor: (context) => {
+                            const ctx = context.chart.ctx;
+                            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                            gradient.addColorStop(0,
+                                'rgba(88, 111, 124, 0.2)'); // comfy-600 with opacity
+                            gradient.addColorStop(1, 'rgba(88, 111, 124, 0)');
+                            return gradient;
+                        },
+                        borderColor: '#586F7C', // comfy-600
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FFFFFF',
+                        pointBorderColor: '#586F7C',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#FFFFFF',
+                            titleColor: '#18181b', // zinc-900
+                            bodyColor: '#52525b', // zinc-600
+                            borderColor: '#e4e4e7', // zinc-200
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('id-ID', {
+                                            style: 'currency',
+                                            currency: 'IDR'
+                                        }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                borderDash: [4, 4]
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return 'Rp ' + (value / 1000000).toFixed(1) + 'jt';
+                                    } else if (value >= 1000) {
+                                        return 'Rp ' + (value / 1000).toFixed(0) + 'rb';
+                                    }
+                                    return 'Rp ' + value;
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Status Chart
+            const ctxStatus = document.getElementById('statusChart').getContext('2d');
+            const statusLabels = {!! json_encode($chartStatuses) !!};
+            const statusCounts = {!! json_encode($statusCounts) !!};
+
+            // Custom colors for statuses
+            const statusColors = {
+                'pending': '#f59e0b', // amber-500
+                'paid': '#3b82f6', // blue-500
+                'processing': '#a855f7', // purple-500
+                'shipped': '#6366f1', // indigo-500
+                'completed': '#10b981', // emerald-500
+                'cancelled': '#ef4444', // red-500
+            };
+
+            const backgroundColors = statusLabels.map(status => statusColors[status] || '#71717a');
+
+            new Chart(ctxStatus, {
+                type: 'doughnut',
+                data: {
+                    labels: statusLabels.map(s => s.charAt(0).toUpperCase() + s.slice(1)),
+                    datasets: [{
+                        data: statusCounts,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                boxWidth: 8
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        });
+    </script>
 @endsection
