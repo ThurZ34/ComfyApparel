@@ -31,7 +31,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'kategori' => 'required',
+            'kategori' => 'required|unique:kategoris,kategori',
             'deskripsi' => 'required',
         ]);
 
@@ -59,7 +59,7 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         request()->validate([
-            'kategori' => 'required',
+            'kategori' => 'required|unique:kategoris,kategori,'.$kategori->id,
             'deskripsi' => 'required',
         ]);
 
@@ -73,6 +73,11 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
+        if ($kategori->produk()->exists()) {
+            return redirect()->route('kategori.index')
+                ->with('error', 'Kategori tidak dapat dihapus karena sudah memiliki produk.');
+        }
+
         $kategori->delete();
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');

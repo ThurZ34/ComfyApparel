@@ -325,7 +325,7 @@
                                                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                 <span class="text-zinc-500 sm:text-sm">Rp</span>
                                             </div>
-                                            <input type="number" name="harga" id="harga"
+                                            <input type="number" name="harga" id="harga" min="0"
                                                 x-model="currentProduct.harga" required
                                                 class="block w-full rounded-md border-0 py-3 px-4 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6"
                                                 placeholder="0">
@@ -335,7 +335,7 @@
                                         <label for="stok"
                                             class="block text-sm font-medium leading-6 text-zinc-900">Stok</label>
                                         <div class="mt-2">
-                                            <input type="number" name="stok" id="stok"
+                                            <input type="number" name="stok" id="stok" min="0"
                                                 x-model="currentProduct.stok" required
                                                 class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
@@ -479,7 +479,7 @@
                                                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                 <span class="text-zinc-500 sm:text-sm">Rp</span>
                                             </div>
-                                            <input type="number" name="harga" id="edit_harga"
+                                            <input type="number" name="harga" id="edit_harga" min="0"
                                                 x-model="currentProduct.harga" required
                                                 class="block w-full rounded-md border-0 py-3 px-4 pl-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>
@@ -488,7 +488,7 @@
                                         <label for="edit_stok"
                                             class="block text-sm font-medium leading-6 text-zinc-900">Stok</label>
                                         <div class="mt-2">
-                                            <input type="number" name="stok" id="edit_stok"
+                                            <input type="number" name="stok" id="edit_stok" min="0"
                                                 x-model="currentProduct.stok" required
                                                 class="block w-full rounded-md border-0 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-comfy-800 sm:text-sm sm:leading-6">
                                         </div>

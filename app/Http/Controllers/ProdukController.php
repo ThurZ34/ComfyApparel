@@ -44,8 +44,8 @@ class ProdukController extends Controller
     {
         request()->validate([
             'nama' => 'required',
-            'harga' => 'required',
-            'stok' => 'required',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|numeric|min:0',
             'ukuran' => 'required',
             'warna' => 'required',
             'deskripsi' => 'required',
@@ -93,8 +93,8 @@ class ProdukController extends Controller
     {
         request()->validate([
             'nama' => 'required',
-            'harga' => 'required',
-            'stok' => 'required',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|numeric|min:0',
             'ukuran' => 'required',
             'warna' => 'required',
             'deskripsi' => 'required',

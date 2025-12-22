@@ -4,14 +4,14 @@
         <!-- Logo Section -->
         <div class="h-20 flex items-center justify-center border-b border-zinc-200 px-6">
             <a href="/" class="flex items-center gap-3 group">
-                <div
+                {{-- <div
                     class="bg-comfy-800 text-white p-2 rounded-lg group-hover:scale-105 transition-transform shadow-md shadow-comfy-800/20">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                     </svg>
-                </div>
+                </div> --}}
                 <span class="font-bold text-xl text-comfy-800">
                     ComfyAdmin
                 </span>
