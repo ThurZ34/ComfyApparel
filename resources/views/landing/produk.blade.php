@@ -167,7 +167,8 @@
                             <!-- Image -->
                             <div class="aspect-4/5 w-full overflow-hidden bg-zinc-200 relative">
                                 @if ($produk->gambar)
-                                    <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama }}"
+                                    <img src="{{ Str::startsWith($produk->gambar, ['http://', 'https://']) ? $produk->gambar : asset('storage/' . $produk->gambar) }}"
+                                        alt="{{ $produk->nama }}"
                                         class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110">
                                 @else
                                     <div

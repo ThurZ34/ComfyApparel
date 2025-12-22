@@ -47,7 +47,8 @@
                 <div class="product-image-wrapper">
                     <div class="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-zinc-100 relative group">
                         @if ($produk->gambar)
-                            <img src="{{ Storage::url($produk->gambar) }}" alt="{{ $produk->nama }}"
+                            <img src="{{ Str::startsWith($produk->gambar, ['http://', 'https://']) ? $produk->gambar : asset('storage/' . $produk->gambar) }}"
+                                alt="{{ $produk->nama }}"
                                 class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                         @else
                             <div class="absolute inset-0 flex items-center justify-center text-zinc-300">

@@ -40,7 +40,7 @@ class LandingController extends Controller
         }
 
         if ($request->filled('search')) {
-            $produks->where('nama', 'like', '%' . $request->search . '%');
+            $produks->where('nama', 'like', '%'.$request->search.'%');
         }
 
         if ($request->filled('harga_min')) {

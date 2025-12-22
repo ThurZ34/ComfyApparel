@@ -47,7 +47,7 @@
                         class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm border border-zinc-100 hover:shadow-md transition-all duration-300">
                         <div class="aspect-[4/3] bg-zinc-200 sm:aspect-[3/2] lg:aspect-[4/3] relative overflow-hidden">
                             @if ($kategori->gambar_terbaru)
-                                <img src="{{ asset('storage/' . $kategori->gambar_terbaru) }}"
+                                <img src="{{ Str::startsWith($kategori->gambar_terbaru, ['http://', 'https://']) ? $kategori->gambar_terbaru : asset('storage/' . $kategori->gambar_terbaru) }}"
                                     alt="{{ $kategori->kategori }}"
                                     class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                                 <div
@@ -105,7 +105,8 @@
                         <div
                             class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-zinc-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative">
                             @if ($produk->gambar)
-                                <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama }}"
+                                <img src="{{ Str::startsWith($produk->gambar, ['http://', 'https://']) ? $produk->gambar : asset('storage/' . $produk->gambar) }}"
+                                    alt="{{ $produk->nama }}"
                                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                             @else
                                 <div class="absolute inset-0 bg-white flex items-center justify-center text-zinc-300">
