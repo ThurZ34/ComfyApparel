@@ -36,7 +36,7 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300"
-        :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' :
+        :class="scrolled ? 'bg-white md:bg-white/90 md:backdrop-blur-md shadow-sm py-4' :
             'bg-white shadow-sm md:bg-transparent md:shadow-none py-4 md:py-6'">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
@@ -182,7 +182,8 @@
                         </a>
                     @endauth
 
-                    <button type="button" class="text-zinc-600" @click="mobileMenuOpen = true">
+                    <button type="button" class="text-zinc-900 hover:text-comfy-800 transition-colors"
+                        @click="mobileMenuOpen = true">
                         <span class="sr-only">Open menu</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-6">
