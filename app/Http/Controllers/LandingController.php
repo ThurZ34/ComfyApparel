@@ -35,8 +35,28 @@ class LandingController extends Controller
     {
         $produks = Produk::with('kategori');
 
-        if ($request->kategori) {
+        if ($request->filled('kategori')) {
             $produks->where('kategori_id', $request->kategori);
+        }
+
+        if ($request->filled('search')) {
+            $produks->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('harga_min')) {
+            $produks->where('harga', '>=', $request->harga_min);
+        }
+
+        if ($request->filled('harga_max')) {
+            $produks->where('harga', '<=', $request->harga_max);
+        }
+
+        if ($request->filled('stok')) {
+            if ($request->stok === 'in_stock') {
+                $produks->where('stok', '>', 0);
+            } elseif ($request->stok === 'out_of_stock') {
+                $produks->where('stok', '=', 0);
+            }
         }
 
         if ($request->sort === 'price_low') {
