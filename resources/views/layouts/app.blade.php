@@ -22,7 +22,15 @@
     </style>
 </head>
 
-<body class="font-sans antialiased h-full bg-zinc-50 text-zinc-900 selection:bg-black selection:text-white">
+<body class="font-sans antialiased h-full bg-zinc-50 text-zinc-900 selection:bg-black selection:text-white"
+    x-data="{ sidebarOpen: false }">
+
+    <!-- Mobile Backdrop -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false"
+        x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-zinc-900/80 z-40 lg:hidden" x-cloak></div>
 
     <div class="min-h-screen flex">
 

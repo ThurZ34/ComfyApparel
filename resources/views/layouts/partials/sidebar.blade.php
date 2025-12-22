@@ -1,5 +1,6 @@
     <aside
-        class="fixed inset-y-0 left-0 z-50 w-72 bg-white text-black transition-all duration-300 ease-in-out border-r border-zinc-200 flex flex-col">
+        class="fixed inset-y-0 left-0 z-50 w-72 bg-white text-black transition-transform duration-300 ease-in-out border-r border-zinc-200 flex flex-col transform lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
         <!-- Logo Section -->
         <div class="h-20 flex items-center justify-center border-b border-zinc-200 px-6">

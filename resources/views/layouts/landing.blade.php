@@ -36,7 +36,8 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300"
-        :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'">
+        :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' :
+            'bg-white shadow-sm md:bg-transparent md:shadow-none py-4 md:py-6'">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <!-- Logo -->
@@ -207,9 +208,18 @@
                     x-transition:leave="transition ease-in-out duration-300 transform"
                     x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
                     class="relative flex w-full max-w-xs flex-col bg-white pb-12 shadow-xl h-full">
-                    <div class="flex px-4 pb-2 pt-5">
+                    <div class="flex items-center justify-between px-5 pt-4">
+                        <div>
+                            @if ($storeSetting->logo)
+                                <img src="{{ Storage::url($storeSetting->logo) }}"
+                                    alt="{{ $storeSetting->store_name }}" class="h-8 w-auto">
+                            @else
+                                <span
+                                    class="font-bold text-lg text-comfy-800">{{ $storeSetting->store_name ?? 'ComfyApparel' }}</span>
+                            @endif
+                        </div>
                         <button type="button"
-                            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-zinc-700"
+                            class="-m-2.5 rounded-md p-2.5 text-zinc-700 hover:text-red-500 transition-colors"
                             @click="mobileMenuOpen = false">
                             <span class="sr-only">Close menu</span>
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
